@@ -1,34 +1,36 @@
 # Day One | AI Income Study Studio
 
-An interactive study guide for Day 1 of the AI Income Challenge.
+A focused, interactive Day 1 study companion for the AI Income Challenge.
 
-## What it includes
+## Experience
 
-A premium, quiet visual design with subtle liquid glass styling and background parallax, clear chapter navigation, interactive diagrams, a revenue scenario calculator, a private planning worksheet, short recall cards, optional deeper explanations and an editable personal notes panel.
+A minimalist Liquid Glass inspired interface, subtle parallax, clear chapter navigation, animated diagrams, study notes, interactive recall cards, an illustrative revenue calculator and a private planning worksheet. It prioritises concepts and actions over promotional success stories.
 
-The emphasis is on actionable ideas, not promotional success stories.
+## Open the guide
 
-## Run it locally
+Open `index.html` in a browser. It is completely self contained, with HTML, CSS and JavaScript bundled into a single file. There are no dependencies, installation steps, framework builds or API keys.
 
-Double click `index.html` to open it in Chrome, Edge, Safari or Firefox. There is no installation, framework, server, or API key required.
+## Optional GitHub Pages hosting
 
-## Publish on GitHub Pages
+1. Go to **Settings > Pages** in this repository.
+2. Under **Build and deployment**, choose **Deploy from a branch**.
+3. Select **main** and **/ (root)**, then save.
+4. GitHub Pages publishes at `https://jaymackay.github.io/ai-income-study-guide/` once deployment completes.
 
-1. Create a new GitHub repository.
-2. Upload `index.html`, `styles.css`, `app.js`, and `.nojekyll` into the repository root.
-3. Open repository **Settings > Pages**.
-4. Under **Build and deployment**, select **Deploy from a branch**.
-5. Choose the `main` branch and `/ (root)` folder, then save.
-6. GitHub provides a public Pages URL once deployed.
+**Important:** GitHub Pages publishes the site publicly, even if this source repository is private (subject to GitHub plan and eligibility). Do not enable Pages if you want to keep the guide private.
 
-**Privacy:** Notes, quiz progress and worksheet responses are stored in the browser's local storage. They are not published to GitHub automatically and they do not sync across devices. Use the Export button to save a local Markdown copy.
+## Privacy and progress
 
-**Accessibility:** Keyboard supported, visible focus indicators, responsive layout, semantic HTML, strong text contrast and a reduced motion mode. Use left and right arrow keys outside text fields to move through chapters.
+Your personal notes, quiz progress and planning responses are saved in your browser's local storage, not automatically to GitHub. They do not sync across devices. Use the Export button to save a local copy.
 
-## Keep in mind
+## Accessibility
 
-Business claims made by seminar presenters are not independent proof of future earnings. The calculator is illustrative and excludes several real costs. The site does not provide investment or financial advice.
+Semantic HTML, keyboard support, visible focus states, responsive layouts and a reduced motion mode. Outside text fields, use the arrow keys to change chapters.
 
-## Customise
+## Disclaimer
 
-Edit chapter content in the `chapters` array in `app.js`. Adjust appearance through CSS variables near the top of `styles.css`. No build step is needed.
+Speaker earnings claims are not evidence of typical outcomes. The illustrative calculator is not an earnings forecast and may exclude costs or taxes.
+
+## Editing
+
+You can update the study content and visual styles directly in `index.html`. Future days can be added as additional chapters or separate pages.
