@@ -51,3 +51,10 @@
 .promise-result button{display:flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:10px;padding:10px 14px;background:var(--glass-soft);color:var(--ink);cursor:pointer}
 .promise-workshop>small{display:block;margin-top:13px}
 @media(max-width:600px){.promise-workshop{padding:19px}.promise-inputs{grid-template-columns:1fr}.promise-result p{font-size:15px}}
+
+/* Day 2 session switcher */
+.day2-track-tabs{display:flex;flex-wrap:wrap;gap:10px;margin:22px 0 25px}
+.day2-track-tabs button{font:800 12px Manrope,sans-serif;color:var(--muted);border:1px solid var(--line);background:var(--glass-soft);border-radius:14px;padding:15px 19px;cursor:pointer;transition:border-color .2s,background .2s,color .2s}
+.day2-track-tabs button span{display:block;font:600 10px Manrope,sans-serif;opacity:.8;margin-top:5px}
+.day2-track-tabs button.is-active{border-color:var(--accent);background:var(--accent-soft);color:var(--ink)}
+.day2-track-tabs button:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
