@@ -1,0 +1,430 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#eff2f7" />
+  <meta name="description" content="A focused, interactive study companion for Day 1 of the AI Income Challenge." />
+  <title>DAY ONE | AI Income Study Studio</title>
+  <style>
+:root{
+  --bg:#eef1f7;--ink:#1d2638;--ink2:#354055;--muted:#647289;--line:rgba(72,89,121,.13);
+  --glass:rgba(255,255,255,.63);--glass-subtle:rgba(255,255,255,.45);--glass-strong:rgba(255,255,255,.82);
+  --shadow:0 22px 80px rgba(70,85,124,.095),0 4px 18px rgba(64,77,107,.04);
+  --blue:#436fe8;--blue-deep:#284dc1;--blue-pale:#e9edff;--mint:#5fb5a6;--purple:#8875cc;
+  --radius:26px;--font:-apple-system,BlinkMacSystemFont,'SF Pro Display','Segoe UI Variable Display','Segoe UI',Arial,sans-serif;
+}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.65 var(--font);min-height:100vh;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body[data-theme="dark"]{--bg:#111725;--ink:#eff3fc;--ink2:#c7cfe2;--muted:#9daac1;--line:rgba(213,222,246,.13);--glass:rgba(30,39,58,.7);--glass-subtle:rgba(34,43,63,.63);--glass-strong:rgba(36,45,65,.9);--shadow:0 20px 80px rgba(0,0,0,.25),0 4px 16px rgba(0,0,0,.12);--blue:#98b4ff;--blue-deep:#bed0ff;--blue-pale:rgba(91,119,203,.22);--mint:#80d3bb;--purple:#b6a9ef}
+button,input,textarea{font:inherit}button{cursor:pointer}button:focus-visible,input:focus-visible,textarea:focus-visible,a:focus-visible,summary:focus-visible{outline:3px solid #6895ff;outline-offset:4px}svg{display:block}button svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}.visually-hidden{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}.skip-link{position:fixed;top:12px;left:12px;z-index:100;background:#fff;color:#101928;padding:12px 18px;border-radius:12px;transform:translateY(-200%)}.skip-link:focus{transform:translateY(0)}
+.ambient{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden}.ambient-orb{position:absolute;border-radius:50%;filter:blur(12px);will-change:translate;transition:translate .16s linear}.orb-one{width:680px;height:680px;background:radial-gradient(circle,rgba(161,184,252,.36),rgba(176,199,246,.1) 44%,transparent 72%);right:-250px;top:-200px;translate:var(--orb1x,0px) var(--orb1y,0px)}.orb-two{width:650px;height:650px;background:radial-gradient(circle,rgba(177,239,225,.31),rgba(186,238,233,.09) 48%,transparent 73%);left:-320px;bottom:-220px;translate:var(--orb2x,0px) var(--orb2y,0px)}.orb-three{width:510px;height:510px;background:radial-gradient(circle,rgba(222,200,251,.33),transparent 70%);left:42%;top:48%;translate:var(--orb3x,0px) var(--orb3y,0px)}.ambient-grain{position:absolute;inset:0;opacity:.13;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 140 140' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.7' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.12'/%3E%3C/svg%3E")}
+.app-shell{min-height:100vh;display:grid;grid-template-columns:256px minmax(0,1fr);gap:22px;padding:18px;max-width:1800px;margin:0 auto}.glass-frame,.glass-panel,.glass-card{background:var(--glass);border:1px solid rgba(255,255,255,.68);box-shadow:var(--shadow);backdrop-filter:blur(24px) saturate(155%);-webkit-backdrop-filter:blur(24px) saturate(155%)}body[data-theme="dark"] .glass-frame,body[data-theme="dark"] .glass-panel,body[data-theme="dark"] .glass-card{border-color:rgba(210,220,255,.13)}
+.sidebar{border-radius:28px;min-height:calc(100vh - 36px);max-height:calc(100vh - 36px);position:sticky;top:18px;display:flex;flex-direction:column;padding:27px 15px 17px;overflow-y:auto;scrollbar-width:thin;scrollbar-color:rgba(120,130,170,.3) transparent}.brand-row{display:flex;align-items:center;gap:12px;padding:0 11px}.brand-mark{width:33px;height:33px;display:grid;grid-template-columns:repeat(2,1fr);gap:3px;transform:rotate(-13deg)}.brand-mark span{border-radius:5px;background:#527cec;box-shadow:inset 1px 2px 3px rgba(255,255,255,.44)}.brand-mark span:nth-child(2){background:#94c7e9}.brand-mark span:nth-child(3){background:#8b9cef}.brand-mark span:nth-child(4){background:#a7d5c8}.brand-text{line-height:1.12}.brand-text strong{font-size:11px;letter-spacing:.16em;font-weight:790;display:block}.brand-text small{font-size:9px;color:var(--muted);letter-spacing:.08em;white-space:nowrap}.sidebar-title{padding:47px 12px 25px}.eyebrow{font-size:10px;letter-spacing:.18em;font-weight:770;color:var(--blue);display:block}.sidebar-title strong{display:block;font-size:31px;letter-spacing:-.055em;font-weight:760;line-height:1.15;margin:10px 0}.sidebar-period{color:var(--blue)}.sidebar-title p{font-size:12px;color:var(--muted);margin:4px 0 0}.sidebar-divider{height:1px;background:var(--line);margin:0 10px 24px}.nav-label{font-size:10px;letter-spacing:.15em;display:flex;justify-content:space-between;color:var(--muted);font-weight:800;padding:0 12px 11px}.nav-label span{letter-spacing:0;font-size:9px;opacity:.75}.chapter-nav{display:grid;gap:4px}.nav-item{width:100%;text-align:left;display:flex;align-items:center;gap:13px;padding:11px 10px;border:1px solid transparent;border-radius:13px;background:none;color:var(--ink2);transition:background .2s,border-color .2s,transform .2s}.nav-item:hover{background:var(--glass-strong);transform:translateX(2px)}.nav-item[aria-current="page"]{background:linear-gradient(110deg,rgba(133,165,253,.22),rgba(215,227,255,.13));border-color:rgba(112,142,235,.24);color:var(--ink);box-shadow:0 4px 18px rgba(64,96,186,.07)}.nav-number{font-size:10px;letter-spacing:.06em;font-variant-numeric:tabular-nums;font-weight:750;color:var(--muted);width:24px;text-align:center}.nav-item[aria-current="page"] .nav-number{color:var(--blue)}.nav-text{font-size:12px;font-weight:650;line-height:1.35}.nav-check{margin-left:auto;color:var(--mint);font-size:14px;line-height:1}.sidebar-bottom{margin-top:auto;padding:24px 12px 0;position:relative}.sidebar-bottom:before{content:'';position:absolute;left:12px;right:12px;top:10px;height:1px;background:var(--line)}.streak-icon{width:32px;height:32px;display:grid;place-items:center;color:#517ddf;background:rgba(145,174,255,.23);border-radius:11px;margin-bottom:11px}.progress-meta{display:flex;align-items:center;justify-content:space-between;gap:8px}.progress-meta span{font-size:9px;letter-spacing:.08em;color:var(--muted);font-weight:800}.progress-meta strong{font-size:10px;color:var(--ink2);font-weight:700}.mini-progress,.footer-track{height:5px;background:rgba(141,156,188,.18);border-radius:99px;overflow:hidden}.mini-progress{margin-top:12px}.mini-progress span,.footer-track span{display:block;background:linear-gradient(90deg,#8ba7fb,#6185e7,#78c8c1);height:100%;border-radius:99px;width:10%;transition:width .45s ease}.sidebar-bottom p{margin:10px 0 0;color:var(--muted);font-size:10px}.workspace{min-width:0}.topbar{height:62px;display:flex;align-items:center;justify-content:space-between;margin:4px 8px 18px;gap:16px}.top-left{display:flex;align-items:center;gap:10px;color:var(--muted);font-size:10px;font-weight:790;letter-spacing:.11em;white-space:nowrap}.top-dot{width:6px;height:6px;background:#74c7ae;border-radius:50%;box-shadow:0 0 0 4px rgba(111,199,172,.12)}.top-slash{color:#b1bbc9}.top-current{color:var(--ink2);letter-spacing:.025em;text-transform:uppercase}.top-actions{display:flex;gap:8px}.utility-button,.icon-button{border:1px solid var(--line);background:var(--glass);color:var(--ink2);border-radius:14px;height:40px;display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:0 14px;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);transition:transform .2s,background .2s,box-shadow .2s;white-space:nowrap}.utility-button{font-size:11px;font-weight:700}.icon-button{width:40px;padding:0}.utility-button:hover,.icon-button:hover{transform:translateY(-2px);background:var(--glass-strong);box-shadow:0 8px 20px rgba(51,70,111,.1)}.utility-button[aria-pressed="true"]{color:var(--blue);border-color:rgba(105,140,238,.33);background:var(--blue-pale)}.mobile-menu{display:none}.main{max-width:1070px;padding:0 26px 24px;margin:0 auto}.chapter-meta{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}.chapter-kicker{font-size:10px;font-weight:800;color:var(--blue);letter-spacing:.17em}.chapter-counter{display:flex;gap:9px;font-size:12px;font-weight:750;color:var(--muted);font-variant-numeric:tabular-nums}.chapter-counter span:first-child{color:var(--ink)}.counter-divider{opacity:.4}.view-wrapper{min-height:570px}.view-wrapper.enter{animation:rise .47s cubic-bezier(.2,.68,.2,1) both}@keyframes rise{from{opacity:0;transform:translateY(11px)}to{opacity:1;transform:translateY(0)}}.lesson-title{max-width:870px;font-size:clamp(43px,5.7vw,72px);line-height:1.065;letter-spacing:-.064em;font-weight:760;margin:4px 0 17px}.lesson-title .title-gradient{background:linear-gradient(120deg,#3867d6 4%,#7480ce 51%,#63a4a7);-webkit-background-clip:text;background-clip:text;color:transparent}body[data-theme="dark"] .lesson-title .title-gradient{background-image:linear-gradient(120deg,#b1c3ff 0%,#adb9ff 48%,#8cddcf)}.lesson-lead{font-size:clamp(15px,1.3vw,18px);font-weight:420;line-height:1.7;color:var(--muted);max-width:700px;margin:0 0 29px}.content-stack{display:grid;gap:16px}.glass-panel{border-radius:var(--radius)}.module{padding:30px}.module-mini-title{font-size:10px;font-weight:800;color:var(--muted);letter-spacing:.14em;margin:0 0 18px;display:flex;align-items:center;gap:12px}.module-mini-title:after{content:'';height:1px;background:var(--line);flex:1}.module h2,.compact-card h3{margin:0;color:var(--ink);letter-spacing:-.035em}.module h2{font-size:23px;line-height:1.2}.module p{color:var(--ink2)}.focus-statement{display:flex;align-items:center;gap:20px;border-radius:21px;padding:20px 22px;background:linear-gradient(100deg,rgba(104,146,234,.12),rgba(144,217,207,.12));border:1px solid rgba(129,166,229,.19)}.statement-icon{width:41px;height:41px;border-radius:14px;flex:0 0 41px;display:grid;place-items:center;background:var(--glass-strong);box-shadow:0 4px 16px rgba(80,110,160,.08);font-size:22px;color:var(--blue)}.focus-statement span{font-size:10px;letter-spacing:.13em;font-weight:800;color:var(--muted);display:block;margin-bottom:3px}.focus-statement strong{font-size:15px;font-weight:680;letter-spacing:-.018em;line-height:1.45;display:block}.tiny-note{font-size:11px;color:var(--muted)!important;line-height:1.65;margin:18px 0 0}.tiny-note strong{color:var(--ink2)}.grid-two{display:grid;grid-template-columns:1fr 1fr;gap:16px}.grid-three{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.compact-card{border:1px solid var(--line);border-radius:19px;padding:22px;background:var(--glass-subtle);min-width:0}.compact-card h3{font-size:18px;font-weight:740;margin:8px 0}.compact-card p{font-size:13px;color:var(--muted);margin:0;line-height:1.6}.card-eyebrow{font-size:10px;font-weight:800;color:var(--blue);letter-spacing:.13em}.highlight-number{font-size:39px;font-weight:735;letter-spacing:-.075em;line-height:1;margin:8px 0 13px;background:linear-gradient(120deg,#4e75e7,#76b9bb);color:transparent;background-clip:text}.pill-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:17px}.soft-pill{border-radius:999px;background:var(--glass-subtle);border:1px solid var(--line);color:var(--ink2);font-size:11px;font-weight:690;padding:7px 11px}.pill-strong{color:var(--blue);background:var(--blue-pale)}.reveal{margin-top:16px;border:1px solid var(--line);border-radius:16px;background:var(--glass-subtle);padding:0 18px}.reveal summary{list-style:none;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:17px 0;font-size:12px;font-weight:750;color:var(--ink2);cursor:pointer}.reveal summary::-webkit-details-marker{display:none}.reveal summary:after{content:'+';font-size:23px;color:var(--blue);line-height:1;font-weight:350}.reveal[open] summary:after{content:'−'}.reveal-content{border-top:1px solid var(--line);padding:0 0 16px;color:var(--muted);font-size:13px}.reveal-content p{font-size:13px;color:var(--ink2);line-height:1.65}.reveal-content ul{padding-left:19px;line-height:1.8}.reveal-content li{padding-left:4px;margin-bottom:5px}.reveal-content strong{color:var(--ink)}
+/* The first chapter */
+.welcome-visual{position:relative;min-height:340px;display:grid;place-items:center;overflow:hidden;background:linear-gradient(145deg,rgba(29,47,87,.94),rgba(47,70,125,.9) 52%,rgba(59,95,129,.94));color:#fff;border:1px solid rgba(255,255,255,.22);border-radius:29px;box-shadow:0 27px 60px rgba(43,64,117,.19)}.welcome-visual:before{content:'';position:absolute;width:430px;height:430px;border-radius:50%;background:radial-gradient(circle,rgba(122,156,253,.46),rgba(113,138,206,.05) 64%,transparent 70%);top:-150px;left:-110px}.welcome-visual:after{content:'';position:absolute;width:350px;height:350px;border-radius:50%;background:radial-gradient(circle,rgba(95,203,198,.35),transparent 68%);bottom:-190px;right:-60px}.visual-ring{width:257px;height:257px;border-radius:50%;border:1px solid rgba(237,247,255,.16);display:grid;place-items:center;position:relative;z-index:1;box-shadow:inset 0 0 70px rgba(182,216,255,.07),0 0 0 34px rgba(213,235,255,.028),0 0 0 79px rgba(213,235,255,.022)}.visual-ring:before{content:'';position:absolute;inset:28px;border-radius:50%;border:1px solid rgba(229,243,255,.22);box-shadow:0 0 36px rgba(137,182,255,.2)}.visual-heart{text-align:center;z-index:2}.visual-heart .micro{font-size:9px;letter-spacing:.2em;font-weight:800;color:#b6caf8}.visual-heart strong{display:block;font-size:29px;letter-spacing:-.05em;line-height:1.1;margin:9px 0}.visual-heart small{font-size:10px;color:#c6d6ed;letter-spacing:.03em}.orbit-tag{position:absolute;z-index:3;display:flex;align-items:center;gap:8px;background:rgba(229,240,255,.12);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(250,255,255,.25);border-radius:13px;padding:11px 15px;font-size:11px;font-weight:730;box-shadow:0 10px 25px rgba(0,0,0,.1)}.orbit-tag:before{content:'';width:7px;height:7px;border-radius:50%;background:#90e9d8}.orbit-a{top:17%;right:15%}.orbit-b{bottom:18%;left:14%}.orbit-c{bottom:17%;right:11%}.orbit-c:before{background:#d6ceff}.triple-compact .compact-card{padding:17px 19px}.triple-compact h3{font-size:14px;margin:4px 0}.triple-compact p{font-size:12px}
+/* Opportunity timeline */
+.stages{position:relative;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.stage{border:1px solid var(--line);background:var(--glass-subtle);border-radius:19px;padding:24px 22px;min-height:168px;position:relative}.stage.active{background:linear-gradient(130deg,rgba(101,140,232,.2),rgba(126,192,215,.12));border-color:rgba(104,142,232,.32);box-shadow:0 8px 30px rgba(82,113,202,.09)}.stage .stage-tag{font-size:10px;letter-spacing:.13em;font-weight:800;color:var(--muted)}.stage.active .stage-tag{color:var(--blue)}.stage h3{font-size:20px;line-height:1.25;letter-spacing:-.03em;margin:15px 0 8px}.stage p{font-size:12px;line-height:1.58;color:var(--muted);margin:0}.active-label{position:absolute;top:17px;right:16px;font-size:9px;letter-spacing:.06em;color:var(--blue);background:var(--blue-pale);padding:4px 8px;border-radius:100px;font-weight:800}.test-list{display:grid;gap:10px}.test-item{display:flex;align-items:center;gap:14px;padding:15px 16px;border:1px solid var(--line);border-radius:14px;background:var(--glass-subtle)}.test-item .round-check{display:grid;place-items:center;flex:0 0 28px;width:28px;height:28px;border-radius:50%;background:rgba(111,204,168,.17);color:var(--mint);font-weight:800}.test-item span{font-size:13px;font-weight:630;line-height:1.5}
+/* Ownership calculator */
+.turning-diagram{display:grid;grid-template-columns:1fr 100px 1fr;gap:7px;align-items:center;min-height:200px}.salary-box,.side-box{border:1px solid var(--line);border-radius:18px;padding:26px;text-align:center;min-width:0}.salary-box{background:var(--glass-subtle)}.side-box{background:linear-gradient(135deg,rgba(123,163,247,.21),rgba(138,210,196,.16));border-color:rgba(102,151,207,.22)}.salary-box small,.side-box small{display:block;text-transform:uppercase;font-size:9px;font-weight:800;letter-spacing:.13em;color:var(--muted)}.salary-box strong,.side-box strong{display:block;font-size:25px;letter-spacing:-.055em;line-height:1.3;margin:8px 0}.salary-box p,.side-box p{font-size:11px;color:var(--muted);line-height:1.5;margin:0}.versus-line{text-align:center;font-size:10px;font-weight:800;letter-spacing:.09em;color:var(--blue);position:relative}.versus-line:before{content:'';position:absolute;left:0;right:0;height:1px;background:var(--line);top:50%;z-index:-1}.versus-line span{background:var(--glass-strong);border:1px solid var(--line);border-radius:100px;padding:8px}.calculator{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.field label{font-size:10px;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);font-weight:780;display:block;margin:0 0 7px}.field input{width:100%;border:1px solid var(--line);border-radius:13px;padding:11px 13px;background:var(--glass-strong);color:var(--ink);font-weight:720;letter-spacing:-.025em;outline-offset:0}.calc-result{display:flex;align-items:center;justify-content:space-between;gap:25px;padding:20px 23px;border-radius:16px;background:linear-gradient(110deg,rgba(112,152,235,.15),rgba(128,205,192,.16));margin-top:16px;border:1px solid rgba(106,153,215,.16)}.calc-result span{font-size:13px;color:var(--ink2);font-weight:650}.calc-result strong{font-size:32px;color:var(--blue);letter-spacing:-.07em;line-height:1.1}.calc-result small{color:var(--muted);font-size:11px}
+/* Three D system */
+.framework-diagram{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:17px;position:relative}.framework-diagram:before{content:'';position:absolute;left:16%;right:16%;top:46px;border-top:1px dashed rgba(114,149,210,.42)}.framework-cell{position:relative;padding:24px 19px;border:1px solid var(--line);border-radius:21px;background:var(--glass-subtle);text-align:center;z-index:1}.framework-bubble{margin:0 auto 13px;width:48px;height:48px;border-radius:16px;background:linear-gradient(135deg,rgba(108,146,230,.24),rgba(165,218,215,.23));border:1px solid rgba(147,175,229,.33);display:grid;place-items:center;font-size:12px;font-weight:800;color:var(--blue);box-shadow:inset 0 2px 9px rgba(255,255,255,.4)}.framework-cell h3{font-size:21px;letter-spacing:-.04em;margin:0 0 7px}.framework-cell p{font-size:12px;color:var(--muted);margin:0;line-height:1.6}.framework-arrow{position:absolute;z-index:3;top:36px;right:-20px;background:var(--glass-strong);border:1px solid var(--line);border-radius:50%;display:grid;place-items:center;color:var(--blue);width:24px;height:24px;font-size:16px}.small-callout{padding:13px 17px;background:rgba(247,204,117,.11);border:1px solid rgba(216,168,67,.19);border-radius:13px;font-size:12px;color:var(--ink2)}
+/* Develop */
+.compare-card{min-height:165px;position:relative}.compare-card.avoid{background:rgba(180,187,206,.1)}.compare-card.prefer{background:linear-gradient(140deg,rgba(127,175,237,.16),rgba(130,220,187,.1))}.compare-card .quality{font-size:10px;font-weight:800;letter-spacing:.12em;color:var(--muted)}.compare-card.prefer .quality{color:var(--blue)}.compare-card h3{font-size:21px;line-height:1.3;max-width:290px;margin:13px 0 12px}.compare-card p{font-size:12px}.four-test{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.criteria{padding:18px 14px;border:1px solid var(--line);border-radius:17px;background:var(--glass-subtle)}.criteria i{font-style:normal;font-size:10px;color:var(--blue);font-weight:800;letter-spacing:.08em}.criteria strong{display:block;font-size:13px;margin:8px 0 5px}.criteria span{font-size:11px;color:var(--muted);line-height:1.45;display:block}
+/* Demand & delivery */
+.pathway{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.pathway-item{border:1px solid var(--line);background:var(--glass-subtle);border-radius:19px;padding:23px 20px;position:relative}.pathway-item:after{content:'›';position:absolute;right:-17px;top:50%;transform:translateY(-50%);color:var(--blue);font-size:25px;z-index:2}.pathway-item:last-child:after{display:none}.pathway-item .path-icon{display:grid;place-items:center;height:35px;width:35px;border-radius:12px;background:var(--blue-pale);color:var(--blue);font-weight:800;font-size:14px}.pathway-item h3{margin:12px 0 6px;line-height:1.25;font-size:18px}.pathway-item p{margin:0;font-size:12px;color:var(--muted);line-height:1.55}.flowline{display:grid;grid-template-columns:repeat(4,1fr);gap:9px}.flow-step{border:1px solid var(--line);border-radius:15px;background:var(--glass-subtle);padding:17px 13px;position:relative;text-align:center}.flow-step:not(:last-child):after{content:'→';position:absolute;right:-13px;top:42%;font-weight:700;color:var(--blue);z-index:3;background:var(--glass-strong);border-radius:50%;height:22px;width:22px}.flow-step b{font-size:10px;color:var(--blue);display:block;letter-spacing:.08em}.flow-step strong{font-size:13px;display:block;margin:9px 0 4px;line-height:1.3}.flow-step small{font-size:11px;line-height:1.5;color:var(--muted);display:block}
+/* execution */
+.execution-list{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}.execution-step{min-height:180px;border:1px solid var(--line);border-radius:18px;padding:19px 15px;background:var(--glass-subtle)}.execution-step span{font-size:25px;color:var(--blue);font-weight:740;letter-spacing:-.06em}.execution-step h3{font-size:15px;line-height:1.2;letter-spacing:-.03em;margin:11px 0}.execution-step p{font-size:11px;line-height:1.5;color:var(--muted);margin:0}
+/* Plan & recall */
+.worksheet{display:grid;gap:14px}.worksheet label{font-size:11px;letter-spacing:.02em;font-weight:750;color:var(--ink2);display:block;margin-bottom:8px}.worksheet textarea,.personal-panel textarea{display:block;width:100%;min-height:91px;resize:vertical;background:var(--glass-strong);border:1px solid var(--line);border-radius:13px;padding:15px 17px;color:var(--ink);line-height:1.65;font-size:13px}.worksheet textarea::placeholder,.personal-panel textarea::placeholder{color:var(--muted);opacity:.7}.task-list{display:grid;grid-template-columns:1fr 1fr;gap:10px}.task-item{display:flex;gap:12px;align-items:flex-start;padding:14px;border:1px solid var(--line);background:var(--glass-subtle);border-radius:13px;cursor:pointer;font-size:12px;line-height:1.5;color:var(--ink2);font-weight:630}.task-item input{width:17px;height:17px;accent-color:#597ee7;margin:1px 0 0;flex:0 0 auto}.task-item:has(input:checked){background:rgba(106,202,164,.12);color:var(--muted)}.task-item:has(input:checked) span{text-decoration:line-through;text-decoration-color:rgba(80,104,146,.5)}.worksheet-feedback{font-size:11px;color:var(--muted);margin:12px 0 0}
+.flashcard{border:1px solid rgba(124,154,224,.24);border-radius:24px;background:linear-gradient(140deg,rgba(224,234,255,.4),rgba(229,250,245,.22));padding:34px;min-height:280px;display:flex;flex-direction:column;justify-content:space-between;transition:background .25s}.flashcard-label{font-size:10px;font-weight:800;color:var(--blue);letter-spacing:.16em}.flashcard-prompt{font-size:clamp(21px,2.5vw,29px);line-height:1.35;letter-spacing:-.04em;font-weight:730;max-width:710px;margin:24px 0}.flashcard-answer{display:block;padding:17px 19px;background:var(--glass-strong);border:1px solid var(--line);border-radius:15px;color:var(--ink);font-size:14px;font-weight:650;line-height:1.7}.flashcard-controls{display:flex;gap:10px;justify-content:space-between;flex-wrap:wrap;margin-top:15px}.control-left,.control-right{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.subtle-button,.solid-button{border-radius:13px;padding:11px 16px;border:1px solid var(--line);font-size:12px;font-weight:750;background:var(--glass-strong);color:var(--ink2);transition:transform .18s,filter .18s}.solid-button{background:linear-gradient(125deg,#5079e1,#6f8ce6);border-color:transparent;color:white;box-shadow:0 7px 20px rgba(68,104,199,.17)}.subtle-button:hover,.solid-button:hover{transform:translateY(-2px);filter:brightness(1.05)}.subtle-button:disabled,.solid-button:disabled{opacity:.38;cursor:not-allowed;transform:none}.recall-track{display:flex;align-items:center;gap:7px;margin:16px 0}.recall-dot{width:100%;height:5px;max-width:55px;background:rgba(122,142,183,.18);border-radius:9px}.recall-dot.complete{background:#76bda7}.recall-dot.current{background:var(--blue)}.score-card{display:flex;align-items:center;gap:15px;margin-top:16px;border:1px solid var(--line);border-radius:15px;padding:13px 16px;background:var(--glass-subtle)}.score-card strong{font-size:24px;letter-spacing:-.045em;color:var(--blue)}.score-card span{font-size:12px;color:var(--muted)}
+/* personal notes, footer */
+.lesson-extra{margin-top:16px}.toggle-notes{border:1px solid var(--line);color:var(--ink2);background:var(--glass-subtle);display:inline-flex;align-items:center;gap:10px;padding:12px 16px;border-radius:13px;font-size:12px;font-weight:730;transition:background .2s}.toggle-notes:hover{background:var(--glass-strong)}.toggle-notes svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-linecap:round;stroke-width:1.7}.personal-panel{margin:18px 0;padding:28px}.personal-panel-heading{display:flex;align-items:flex-start;justify-content:space-between;gap:20px}.personal-panel h2{font-size:27px;letter-spacing:-.04em;margin:6px 0 7px}.personal-panel p{color:var(--muted);font-size:12px;margin:0 0 18px}.autosave-label{font-size:10px;color:var(--mint);font-weight:750;white-space:nowrap}.personal-panel textarea{min-height:160px}.privacy-footnote{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:10px;margin-top:11px}.privacy-footnote svg{width:13px;height:13px;stroke:currentColor;stroke-width:1.7;fill:none}.chapter-footer{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-top:27px}.chapter-step{border-radius:14px;padding:13px 16px;font-size:12px;font-weight:770;display:flex;align-items:center;gap:9px;transition:transform .2s,background .2s}.chapter-step:hover:not(:disabled){transform:translateY(-2px)}.chapter-step:disabled{opacity:.25;cursor:not-allowed}.secondary-step{border:1px solid var(--line);background:var(--glass-subtle);color:var(--ink2)}.primary-step{background:linear-gradient(125deg,#3c65d4,#5f82dd);border:1px solid rgba(255,255,255,.2);color:white;box-shadow:0 9px 25px rgba(57,88,181,.18)}.footer-progress{min-width:90px;flex:1;max-width:180px;text-align:center}.footer-track{height:4px}.footer-progress small{font-size:9px;color:var(--muted);letter-spacing:.08em;font-weight:730}.app-footer{padding:44px 0 6px;display:flex;justify-content:space-between;gap:18px;color:var(--muted);font-size:9px;letter-spacing:.1em;font-weight:730}.app-footer span:last-child{letter-spacing:.015em;text-transform:none;font-weight:500}.footer-mid{padding:0 6px}.toast{position:fixed;bottom:24px;left:50%;transform:translate(-50%,20px);opacity:0;pointer-events:none;padding:12px 17px;background:#1d2b46;color:#fff;border-radius:13px;box-shadow:0 12px 40px rgba(21,30,51,.3);font-size:12px;z-index:70;transition:opacity .22s,transform .22s}.toast.show{opacity:1;transform:translate(-50%,0)}
+/* Focus mode */
+body.focus-mode .app-shell{grid-template-columns:minmax(0,1fr);max-width:1250px}body.focus-mode .sidebar{display:none}body.focus-mode .main{max-width:980px}body.focus-mode .topbar{margin-bottom:26px}
+/* Mobile */
+@media(max-width:1080px){.app-shell{grid-template-columns:223px minmax(0,1fr);gap:12px;padding:12px}.sidebar{top:12px;min-height:calc(100vh - 24px);max-height:calc(100vh - 24px)}.main{padding:0 13px 20px}.lesson-title{font-size:clamp(39px,5.5vw,61px)}.execution-list{grid-template-columns:repeat(3,1fr)}.four-test{grid-template-columns:1fr 1fr}.brand-row{padding:0 6px}.sidebar-title{padding-left:6px}.chapter-nav .nav-item{padding:10px 8px}}
+@media(max-width:760px){.app-shell{display:block;padding:0}.sidebar{position:fixed;left:12px;top:12px;bottom:12px;max-height:none;min-height:0;width:min(300px,calc(100vw - 55px));z-index:50;transform:translateX(calc(-100% - 25px));transition:transform .32s cubic-bezier(.2,.8,.2,1)}body.menu-open .sidebar{transform:translateX(0)}.mobile-overlay{position:fixed;inset:0;background:rgba(13,24,45,.38);z-index:45;backdrop-filter:blur(3px)}body.menu-open .mobile-overlay{display:block}.mobile-menu{display:inline-flex}.topbar{margin:0 14px 8px;height:64px}.top-left{gap:8px}.top-left>span:not(.top-current):not(.top-dot){display:none}.top-left .top-dot{display:none}.top-current{font-size:11px}.main{padding:6px 18px 22px}.chapter-meta{margin-top:8px;margin-bottom:16px}.lesson-title{font-size:clamp(43px,9vw,58px)}.lesson-lead{font-size:15px}.welcome-visual{min-height:295px}.module{padding:21px}.module h2{font-size:21px}.grid-three{grid-template-columns:1fr 1fr}.execution-list{grid-template-columns:1fr 1fr}.orbit-a{right:8%;top:13%}.orbit-b{left:7%;bottom:13%}.orbit-c{right:7%;bottom:15%}.orbit-tag{padding:9px 10px;font-size:9px}.visual-ring{width:220px;height:220px}.focus-statement{padding:17px;gap:12px}.framework-diagram{gap:9px}.framework-cell{padding:18px 9px}.framework-cell h3{font-size:15px}.framework-cell p{font-size:11px}.framework-arrow{display:none}.topbar .export-button span,.topbar .utility-button#focusButton span{display:none}.topbar .utility-button{width:40px;padding:0}.pathway{gap:8px}.pathway-item{padding:18px 12px}.pathway-item h3{font-size:15px}.pathway-item:after{right:-10px}.flowline{grid-template-columns:1fr 1fr}.flow-step:nth-child(2):after{display:none}.personal-panel{padding:23px}}
+@media(max-width:520px){.lesson-title{font-size:42px}.grid-two,.grid-three,.stages,.calculator{grid-template-columns:1fr}.stages .stage{min-height:0}.four-test{grid-template-columns:1fr 1fr}.turning-diagram{grid-template-columns:1fr 54px 1fr}.salary-box,.side-box{padding:18px 8px}.salary-box strong,.side-box strong{font-size:18px}.salary-box small,.side-box small{font-size:8px}.calc-result{gap:8px;padding:16px}.calc-result strong{font-size:27px}.framework-diagram{grid-template-columns:1fr}.framework-diagram:before{display:none}.framework-cell{display:grid;grid-template-columns:60px 1fr;grid-template-rows:auto auto;gap:4px 12px;text-align:left;padding:15px}.framework-bubble{grid-row:1/3;margin:0;width:50px;height:50px}.framework-cell h3{align-self:end;margin:0;font-size:19px}.framework-cell p{align-self:start}.pathway{grid-template-columns:1fr}.pathway-item:after{display:none}.flowline{grid-template-columns:1fr 1fr}.execution-list{grid-template-columns:1fr 1fr}.execution-step{padding:16px 13px;min-height:165px}.task-list{grid-template-columns:1fr}.personal-panel-heading{display:block}.autosave-label{display:block;margin:5px 0 9px}.visual-ring{width:208px;height:208px}.orbit-tag{font-size:9px}.orbit-a{top:7%;right:6%}.orbit-b{bottom:8%;left:4%}.orbit-c{bottom:8%;right:4%}.footer-progress{max-width:70px}.chapter-step{padding:12px;font-size:11px}.app-footer{font-size:8px}.flashcard{padding:22px;min-height:260px}.recall-track{gap:4px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;animation:none!important;transition:none!important}.ambient-orb{translate:0 0!important}}
+@media print{body{background:#fff}.ambient,.sidebar,.topbar,.chapter-footer,.app-footer,.lesson-extra,.toast{display:none!important}.app-shell{display:block;padding:0}.main{max-width:100%;padding:0}.glass-panel{border:1px solid #dfe4ee;box-shadow:none;backdrop-filter:none}.view-wrapper{min-height:0}.lesson-title{font-size:38px}.reveal{display:none}.module{break-inside:avoid}.personal-panel[hidden]{display:none}}
+
+/* Final readability and mobile navigation refinements */
+.focus-statement .statement-icon{font-size:22px;line-height:1;font-weight:550}
+@media(max-width:760px){.topbar{position:sticky;top:8px;z-index:21;padding:0 11px;margin:9px 12px 16px;background:var(--glass);border:1px solid var(--line);border-radius:17px;backdrop-filter:blur(24px) saturate(155%);-webkit-backdrop-filter:blur(24px) saturate(155%);box-shadow:0 5px 20px rgba(55,74,120,.06)}}
+body[data-theme="dark"] .utility-button,body[data-theme="dark"] .icon-button{background:rgba(36,48,70,.9);color:#dbe6fa;border-color:rgba(186,201,231,.2)}
+body[data-theme="dark"] .utility-button:hover,body[data-theme="dark"] .icon-button:hover{background:rgba(56,73,101,.98)}
+body[data-theme="dark"] .utility-button[aria-pressed="true"]{background:rgba(87,118,202,.26);color:#c6d4ff;border-color:rgba(136,166,236,.4)}
+
+</style>
+  
+</head>
+<body data-theme="light">
+  <a class="skip-link" href="#main">Skip to the lesson</a>
+  <div class="ambient" aria-hidden="true">
+    <div class="ambient-orb orb-one"></div>
+    <div class="ambient-orb orb-two"></div>
+    <div class="ambient-orb orb-three"></div>
+    <div class="ambient-grain"></div>
+  </div>
+  <div class="app-shell" id="appShell">
+    <aside class="sidebar glass-frame" id="sidebar" aria-label="Course chapters">
+      <div class="brand-row">
+        <div class="brand-mark" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+        <div class="brand-text"><strong>STUDY STUDIO</strong><small>THE AI INCOME SERIES</small></div>
+      </div>
+      <div class="sidebar-title"><span class="eyebrow">YOUR FIELD GUIDE</span><strong>Day One<span class="sidebar-period">.</span></strong><p>From an idea to a digital asset.</p></div>
+      <div class="sidebar-divider"></div>
+      <div class="nav-label">CHAPTERS <span id="navCount">10 LESSONS</span></div>
+      <nav class="chapter-nav" id="chapterNav" aria-label="Choose a chapter"></nav>
+      <div class="sidebar-bottom">
+        <div class="streak-icon" aria-hidden="true">✦</div>
+        <div class="progress-meta"><span>YOUR JOURNEY</span><strong id="sidebarProgress">1 of 10 explored</strong></div>
+        <div class="mini-progress"><span id="sidebarProgressBar"></span></div>
+        <p>Small lessons. Clear ideas. Real action.</p>
+      </div>
+    </aside>
+    <div class="workspace">
+      <header class="topbar" aria-label="Study controls">
+        <div class="top-left"><button id="mobileMenu" class="icon-button mobile-menu" aria-label="Open chapters" aria-expanded="false" aria-controls="sidebar"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button><span class="top-dot"></span><span>THE INCOME PLAYBOOK</span><span class="top-slash">/</span><span class="top-current" id="topCurrent">Overview</span></div>
+        <div class="top-actions">
+          <button class="utility-button" id="focusButton" type="button" aria-pressed="false" title="Hide distractions"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3H4a1 1 0 0 0-1 1v4M16 3h4a1 1 0 0 1 1 1v4M3 16v4a1 1 0 0 0 1 1h4m13-5v4a1 1 0 0 1-1 1h-4"/></svg><span>Focus</span></button>
+          <button class="icon-button theme-button" id="themeButton" type="button" aria-label="Switch color theme" title="Switch color theme"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.2 15.3A8.3 8.3 0 0 1 8.7 3.8 8.6 8.6 0 1 0 20.2 15.3Z"/></svg></button>
+          <button class="utility-button export-button" id="exportButton" type="button" title="Download your personal study notes"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m-4-4 4 4 4-4M4 17v3h16v-3"/></svg><span>Export</span></button>
+        </div>
+      </header>
+      <div class="mobile-overlay" id="mobileOverlay" hidden></div>
+      <main id="main" class="main" tabindex="-1">
+        <div class="chapter-meta"><span class="chapter-kicker" id="chapterKicker">THE BEGINNING</span><div class="chapter-counter"><span id="chapterIndex">01</span><span class="counter-divider">/</span><span id="chapterTotal">10</span></div></div>
+        <div class="view-wrapper" id="view" aria-live="polite"></div>
+        <section class="personal-panel glass-panel" id="personalPanel" hidden>
+          <div class="personal-panel-heading"><div><span class="eyebrow">YOUR WORKSPACE</span><h2>Your private notes.</h2></div><span class="autosave-label" id="saveStatus">Saved on this device</span></div>
+          <p>Write the ideas worth remembering, or how you could apply this lesson. Your notes save automatically in this browser.</p>
+          <label class="visually-hidden" for="personalNotes">Personal notes for this chapter</label>
+          <textarea id="personalNotes" rows="7" placeholder="The one idea I want to remember is…"></textarea>
+          <div class="privacy-footnote"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg><span>Stored locally. No account. No tracking.</span></div>
+        </section>
+        <div class="chapter-footer"><button class="chapter-step secondary-step" id="previousButton" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg><span>Previous</span></button><div class="footer-progress" aria-label="Lesson progress"><div class="footer-track"><span id="footerProgress"></span></div><small id="footerProgressText">01 / 10</small></div><button class="chapter-step primary-step" id="nextButton" type="button"><span>Next lesson</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></button></div>
+        <footer class="app-footer"><span>STUDY STUDIO <span class="footer-mid">·</span> DAY ONE</span><span>Learn deliberately. Build thoughtfully.</span></footer>
+      </main>
+    </div>
+  </div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script>
+'use strict';
+
+// A self contained study experience. No frameworks, APIs, cookies or external services.
+const storageKey = 'ai-income-day1-studio-v1';
+const defaultData = () => ({ visited: [0], notes: {}, worksheet: {}, tasks: {}, recall: {}, theme: 'light', focus: false });
+function restore() {
+  try { const value = JSON.parse(localStorage.getItem(storageKey)); return { ...defaultData(), ...(value && typeof value === 'object' ? value : {}) }; }
+  catch { return defaultData(); }
+}
+let saved = restore();
+const save = () => { try { localStorage.setItem(storageKey, JSON.stringify(saved)); } catch {} };
+const escapeHtml = (value) => String(value).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+const focusCard = (text) => `<aside class="focus-statement"><span class="statement-icon" aria-hidden="true">✧</span><div><span>THE IDEA TO KEEP</span><strong>${text}</strong></div></aside>`;
+const more = (items) => `<details class="reveal"><summary>Go deeper <span class="visually-hidden">into this concept</span></summary><div class="reveal-content">${items}</div></details>`;
+const notesToggle = () => `<div class="lesson-extra"><button type="button" class="toggle-notes" id="notesToggle" aria-expanded="false" aria-controls="personalPanel"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h10l4 4v14H3V3h4zm10 0v5h4M7 12h10M7 16h7"/></svg><span>Add my own notes</span></button></div>`;
+const moduleTitle = (label) => `<div class="module-mini-title">${label}</div>`;
+const windowNote = `<p class="tiny-note"><strong>Keep perspective.</strong> The business opportunity discussed during the seminar is a thesis, not guaranteed earnings. Demand, competition, quality, refunds, platform costs and taxes still matter.</p>`;
+
+const chapters = [
+  {
+    nav:'The big picture', label:'THE BEGINNING', tag:'01 · ORIENTATION', title:'Build something <span class="title-gradient">you own.</span>',
+    lead:'Day One introduced a simple idea: use AI to create useful digital products, then learn how to reach buyers and deliver value.',
+    takeaway:'The goal is not just using AI. It is owning something useful that people are willing to pay for.',
+    body:() => `
+      <section class="welcome-visual" aria-label="Visual model: Learn, build and own your digital asset">
+        <div class="visual-ring"><div class="visual-heart"><span class="micro">YOUR NEXT CHAPTER</span><strong>Learn.<br>Build. Own.</strong><small>One useful asset at a time.</small></div></div>
+        <div class="orbit-tag orbit-a">A problem worth solving</div><div class="orbit-tag orbit-b">A useful solution</div><div class="orbit-tag orbit-c">A real buyer</div>
+      </section>
+      <section class="glass-panel module">${moduleTitle('THE MODEL IN 20 SECONDS')}
+        <div class="grid-three triple-compact">
+          <div class="compact-card"><span class="card-eyebrow">01 · LEARN</span><h3>Find a need</h3><p>Notice a problem people already want solved.</p></div>
+          <div class="compact-card"><span class="card-eyebrow">02 · BUILD</span><h3>Create value</h3><p>Use AI as a tool to help make a useful product.</p></div>
+          <div class="compact-card"><span class="card-eyebrow">03 · OWN</span><h3>Keep improving</h3><p>Sell, learn from feedback and iterate.</p></div>
+        </div>
+        ${more(`<p>A digital product can be a practical guide, spreadsheet, workflow, checklist, template or resource library. Digital delivery removes shipping and inventory, but does not remove the work of finding demand, building trust and supporting customers.</p>`)}
+      </section>${focusCard(chapters[0].takeaway)}`
+  },
+  {
+    nav:'The AI shift', label:'SPOT THE SIGNAL', tag:'02 · OPPORTUNITY', title:'See the shift. <span class="title-gradient">Test the hype.</span>',
+    lead:'The VIP session framed technological change as a sequence: dismissal, early reshuffling, then widespread adoption.',
+    takeaway:'An opportunity is worth exploring when it changes real work and customers pay for the result.',
+    body:() => `
+      <section class="glass-panel module">${moduleTitle('THE THREE STAGES OF CHANGE')}
+        <div class="stages"><div class="stage"><span class="stage-tag">STAGE 01</span><h3>Dismissal</h3><p>People laugh at or ignore the new technology.</p></div><div class="stage active"><span class="active-label">THE SEMINAR’S VIEW</span><span class="stage-tag">STAGE 02</span><h3>The reshuffle</h3><p>New businesses form while established habits change.</p></div><div class="stage"><span class="stage-tag">STAGE 03</span><h3>Obvious</h3><p>The technology is familiar and competition increases.</p></div></div>
+        <p class="tiny-note">“AI is in Stage 2” is the presenter’s framing. It is useful for thinking, not a precise measurement of the market.</p>
+      </section>
+      <section class="glass-panel module">${moduleTitle('THE THREE QUESTION OPPORTUNITY TEST')}<div class="test-list"><div class="test-item"><span class="round-check">✓</span><span>Is it changing how work actually gets done?</span></div><div class="test-item"><span class="round-check">✓</span><span>Will businesses pay because it saves time, money or effort?</span></div><div class="test-item"><span class="round-check">✓</span><span>Would it still be useful without the hype?</span></div></div>
+        ${more(`<p><strong>Apply it to a product idea.</strong> Think of a task that is slow, repetitive or confusing. Ask whether your solution creates a measurable improvement for someone with a specific need. Validate the answer through actual buyer conversations or small tests, not excitement alone.</p>`)}
+      </section>${focusCard(chapters[1].takeaway)}`
+  },
+  {
+    nav:'Ownership & freedom', label:'WHAT FREEDOM MEANS', tag:'03 · OWNERSHIP', title:'The <span class="title-gradient">turning point.</span>',
+    lead:'The turning point is the moment side income exceeds main income. The point of that milestone is choice, not a magic number.',
+    takeaway:'A repeatable asset may create more options, but revenue is not the same as profit or personal take home income.',
+    body:() => `
+      <section class="glass-panel module">${moduleTitle('THE MILESTONE')}
+        <div class="turning-diagram"><div class="salary-box"><small>MAIN INCOME</small><strong>Your salary</strong><p>Pay tied to your current work.</p></div><div class="versus-line"><span>COMPARE</span></div><div class="side-box"><small>SIDE INCOME</small><strong>Your asset</strong><p>Income from something you own.</p></div></div>
+      </section>
+      <section class="glass-panel module">${moduleTitle('EXPLORE THE NUMBERS')}
+        <div class="calculator"><div class="field"><label for="salaryInput">Monthly income target (£)</label><input id="salaryInput" type="number" min="1" max="1000000" step="100" value="3000" inputmode="decimal"></div><div class="field"><label for="priceInput">Product price (£)</label><input id="priceInput" type="number" min="1" max="100000" step="1" value="29" inputmode="decimal"></div><div class="field"><label for="feeInput">Illustrative fees (%)</label><input id="feeInput" type="number" min="0" max="99" step="1" value="10" inputmode="decimal"></div></div>
+        <div class="calc-result"><div><span>Approximate monthly sales needed</span><br><small>To reach the revenue target after the assumed fee</small></div><strong id="salesResult" aria-live="polite">115</strong></div>
+        <p class="tiny-note">A learning scenario, not a sales forecast. This excludes taxes, refunds, advertising, production costs and your time. Compare profit with salary take home, not raw sales.</p>
+      </section>${focusCard(chapters[2].takeaway)}`
+  },
+  {
+    nav:'The 3D system', label:'THE CORE FRAMEWORK', tag:'04 · THE 3D SYSTEM', title:'Three steps. <span class="title-gradient">One engine.</span>',
+    lead:'The seminar’s central business model is a sequence: develop an offer, distribute it to buyers and deliver it reliably.',
+    takeaway:'A product is not a business until people can discover it, want it and successfully receive it.',
+    body:() => `
+      <section class="glass-panel module">${moduleTitle('THE 3D BUSINESS ENGINE')}
+        <div class="framework-diagram">
+          <div class="framework-cell"><div class="framework-bubble">01</div><h3>Develop</h3><p>Make a focused product that solves a real problem.</p><span class="framework-arrow" aria-hidden="true">›</span></div>
+          <div class="framework-cell"><div class="framework-bubble">02</div><h3>Distribute</h3><p>Find the people who already care about that problem.</p><span class="framework-arrow" aria-hidden="true">›</span></div>
+          <div class="framework-cell"><div class="framework-bubble">03</div><h3>Deliver</h3><p>Make purchase, access and support simple.</p></div>
+        </div><div class="pill-row"><span class="soft-pill">Useful offer</span><span class="soft-pill">Buyer attention</span><span class="soft-pill">Reliable fulfilment</span></div>
+      </section>
+      <section class="small-callout"><strong>Common mistake:</strong> spending days polishing a product before checking whether anyone wants it.</section>
+      <section class="glass-panel module">${moduleTitle('THE LOGIC')}
+        <div class="grid-three triple-compact"><div class="compact-card"><span class="card-eyebrow">WITHOUT DEVELOP</span><h3>No value</h3><p>You have attention, but nothing useful to offer.</p></div><div class="compact-card"><span class="card-eyebrow">WITHOUT DISTRIBUTE</span><h3>No demand path</h3><p>A good product stays invisible.</p></div><div class="compact-card"><span class="card-eyebrow">WITHOUT DELIVER</span><h3>No trust</h3><p>Customers may struggle to receive what they bought.</p></div></div>
+      </section>${focusCard(chapters[3].takeaway)}`
+  },
+  {
+    nav:'Develop the product', label:'START WITH THE BUYER', tag:'05 · DEVELOP', title:'Sell the solution. <span class="title-gradient">Not the file.</span>',
+    lead:'AI can help create PDFs, guides and templates. The customer is buying a result, not the format you happen to use.',
+    takeaway:'Choose a narrow audience, a specific painful problem and an outcome you can deliver well.',
+    body:() => `
+      <section class="glass-panel module">${moduleTitle('VAGUE IDEA VS USEFUL OFFER')}
+        <div class="grid-two"><div class="compact-card compare-card avoid"><span class="quality">TOO VAGUE</span><h3>“An AI productivity ebook.”</h3><p>Who wants it? What problem does it solve? What changes afterward?</p></div><div class="compact-card compare-card prefer"><span class="quality">MORE SPECIFIC</span><h3>“A weekly planning template for busy freelancers.”</h3><p>Clear buyer, clear use and an outcome someone can assess.</p></div></div>
+      </section>
+      <section class="glass-panel module">${moduleTitle('THE FOUR FILTERS')}
+        <div class="four-test"><div class="criteria"><i>01</i><strong>Pain</strong><span>Does the problem matter?</span></div><div class="criteria"><i>02</i><strong>Buyer</strong><span>Who feels that pain?</span></div><div class="criteria"><i>03</i><strong>Proof</strong><span>Can I find real demand?</span></div><div class="criteria"><i>04</i><strong>Delivery</strong><span>Can I solve it accurately?</span></div></div>
+        ${more(`<p><strong>Simple starting process:</strong> Find repeated questions in a niche. Interview potential buyers or review existing paid offers. Write one sentence describing the audience, problem and intended result. Build a small prototype and test it before expanding.</p><p><strong>Where AI helps:</strong> outlining, editing, formatting, research support and drafts. Check all facts, examples, copyrights and promises yourself.</p>`)}
+      </section>${focusCard(chapters[4].takeaway)}`
+  },
+  {
+    nav:'Find your buyers', label:'DEMAND BEFORE TRAFFIC', tag:'06 · DISTRIBUTE', title:'Be where the <span class="title-gradient">need exists.</span>',
+    lead:'Distribution means connecting the right offer with people who are already looking for a solution. You do not need a huge audience to start testing demand.',
+    takeaway:'Start with buyers who already express the problem. Be useful before asking for a sale.',
+    body:() => `
+      <section class="glass-panel module">${moduleTitle('THE BUYER JOURNEY')}
+        <div class="pathway"><div class="pathway-item"><span class="path-icon">01</span><h3>Listen</h3><p>Find repeated questions, frustrations and requests.</p></div><div class="pathway-item"><span class="path-icon">02</span><h3>Help</h3><p>Share useful insight or a sample that proves value.</p></div><div class="pathway-item"><span class="path-icon">03</span><h3>Offer</h3><p>Explain the result, price and what the buyer receives.</p></div></div>
+      </section>
+      <section class="glass-panel module">${moduleTitle('WHERE TO LOOK')}
+        <div class="grid-three"><div class="compact-card"><span class="card-eyebrow">COMMUNITIES</span><h3>Conversations</h3><p>Observe what people repeatedly ask in relevant communities.</p></div><div class="compact-card"><span class="card-eyebrow">SEARCH</span><h3>Active intent</h3><p>Look at questions and search terms describing the problem.</p></div><div class="compact-card"><span class="card-eyebrow">MARKETPLACES</span><h3>Existing offers</h3><p>Review what customers pay for and complain about.</p></div></div>
+        ${more(`<p><strong>Your first distribution experiment:</strong> Choose one buyer group and one channel. Write a genuinely useful post, answer questions within community rules, and measure meaningful interest such as questions, clicks or requests for a sample.</p><p>Do not mass message strangers or imply a product is guaranteed to generate income. Clear, honest offers build trust.</p>`)}
+      </section>${focusCard(chapters[5].takeaway)}`
+  },
+  {
+    nav:'Deliver with trust', label:'THE SIMPLE HANDOFF', tag:'07 · DELIVER', title:'Make it feel <span class="title-gradient">effortless.</span>',
+    lead:'Digital fulfilment can be automated, but the customer experience still needs attention. Reliability is part of the product.',
+    takeaway:'Automate repetitive handoffs, while keeping quality, customer support and refund handling human accountable.',
+    body:() => `
+      <section class="glass-panel module">${moduleTitle('THE CUSTOMER EXPERIENCE')}
+        <div class="flowline"><div class="flow-step"><b>01</b><strong>Understand</strong><small>Clear offer and preview</small></div><div class="flow-step"><b>02</b><strong>Purchase</strong><small>Secure checkout</small></div><div class="flow-step"><b>03</b><strong>Access</strong><small>Instant download or login</small></div><div class="flow-step"><b>04</b><strong>Support</strong><small>Help and updates</small></div></div>
+      </section>
+      <section class="glass-panel module">${moduleTitle('WHAT TO AUTOMATE')}
+        <div class="grid-two"><div class="compact-card"><span class="card-eyebrow">SYSTEMS</span><h3>Let software handle</h3><p>Payment confirmation, digital access, receipts and straightforward updates.</p></div><div class="compact-card"><span class="card-eyebrow">RESPONSIBILITY</span><h3>You still own</h3><p>Truthful claims, product quality, support, accessibility and compliance.</p></div></div>
+        ${more(`<p>Whop was presented as an example of a digital storefront. It is one possible platform, not a requirement. Check the current fee structure, policies, customer experience and export options before choosing a provider.</p><p><strong>Prelaunch checklist:</strong> test the checkout, inspect the download, explain refund terms, check links and confirm a buyer can actually use the product.</p>`)}
+      </section>${focusCard(chapters[6].takeaway)}`
+  },
+  {
+    nav:'Execution mindset', label:'THE VIP PLAYBOOK', tag:'08 · EXECUTION', title:'Less waiting. <span class="title-gradient">More learning.</span>',
+    lead:'Walter Bond’s progress code puts execution after a clear target, a supportive environment and a practical strategy.',
+    takeaway:'Take a small, imperfect action that produces feedback. Repeat with what you learn.',
+    body:() => `
+      <section class="glass-panel module">${moduleTitle('THE FIVE PART PROGRESS CODE')}
+        <div class="execution-list"><div class="execution-step"><span>01</span><h3>Target</h3><p>Choose a meaningful outcome.</p></div><div class="execution-step"><span>02</span><h3>Recalibrate</h3><p>Improve your routines and environment.</p></div><div class="execution-step"><span>03</span><h3>Playbook</h3><p>Follow a simple strategy.</p></div><div class="execution-step"><span>04</span><h3>Right people</h3><p>Learn from peers and mentors.</p></div><div class="execution-step"><span>05</span><h3>Execution</h3><p>Do the work and adjust.</p></div></div>
+      </section>
+      <section class="glass-panel module">${moduleTitle('A USEFUL MINDSET')}
+        <div class="grid-two"><div class="compact-card"><span class="card-eyebrow">AVOID</span><h3>Waiting to feel ready</h3><p>Endless tools, research and polishing can hide the fear of testing an idea.</p></div><div class="compact-card"><span class="card-eyebrow">REPLACE WITH</span><h3>Imperfect action</h3><p>One clear task, one deadline and one observable result.</p></div></div>
+        ${more(`<p>Use this rule: if you are unsure what to do next, define a task that can be finished in one focused session. Examples: speak to one prospective buyer, identify three competing offers or produce a rough template for feedback.</p><p>“Move before you are ready” does not mean ignoring legal duties, product accuracy or financial risk. Small experiments should be controlled and affordable.</p>`)}
+      </section>${focusCard(chapters[7].takeaway)}`
+  },
+  {
+    nav:'Your action plan', label:'TURN IDEAS INTO ACTION', tag:'09 · YOUR PLAYBOOK', title:'Make it <span class="title-gradient">yours.</span>',
+    lead:'This is the part that matters most: write your reason, identify your starting point and commit to one practical experiment.',
+    takeaway:'One specific action this week is more useful than ten vague ambitions.',
+    body:() => `
+      <section class="glass-panel module">${moduleTitle('YOUR THREE REFLECTIONS')}
+        <div class="worksheet"><div><label for="whyInput">01 · Why do you want to build independent income?</label><textarea id="whyInput" data-work="why" placeholder="More freedom to choose how I spend my time…"></textarea></div><div><label for="todayInput">02 · Where are you now, and where do you want to be in three years?</label><textarea id="todayInput" data-work="future" placeholder="Today…\nIn three years…"></textarea></div><div><label for="nextInput">03 · What single step can you take this week?</label><textarea id="nextInput" data-work="action" placeholder="I will speak to three potential buyers about…"></textarea></div></div><p class="worksheet-feedback">Your writing saves automatically on this device. You can export it anytime.</p>
+      </section>
+      <section class="glass-panel module">${moduleTitle('A SIMPLE FIRST WEEK')}
+        <div class="task-list"><label class="task-item"><input type="checkbox" data-task="0"><span>Choose one buyer group</span></label><label class="task-item"><input type="checkbox" data-task="1"><span>Identify one frustrating problem</span></label><label class="task-item"><input type="checkbox" data-task="2"><span>Find evidence people want a solution</span></label><label class="task-item"><input type="checkbox" data-task="3"><span>Review three existing alternatives</span></label><label class="task-item"><input type="checkbox" data-task="4"><span>Make a small, useful prototype</span></label><label class="task-item"><input type="checkbox" data-task="5"><span>Ask for honest feedback</span></label></div>
+        <p class="tiny-note">VIP exercise: write your current position, three year vision and one step this week. The main session also asked you to define your personal “why”.</p>
+      </section>${focusCard(chapters[8].takeaway)}`
+  },
+  {
+    nav:'Active recall', label:'THE MEMORY CHECK', tag:'10 · TEST YOURSELF', title:'Read less. <span class="title-gradient">Remember more.</span>',
+    lead:'A few minutes of active recall can be more useful than repeatedly skimming. Think first, then reveal the answer.',
+    takeaway:'You have finished Day One when you can explain the model in your own words and name your next action.',
+    body:() => `
+      <section class="glass-panel module">${moduleTitle('EIGHT QUICK RECALL CARDS')}
+        <div id="recallMount"></div>
+      </section>${focusCard(chapters[9].takeaway)}`
+  }
+];
+const questionBank = [
+  {q:'What is the turning point?', a:'The day your side income surpasses your main income. The idea is greater choice over your time and work.'},
+  {q:'What are the three parts of the 3D system?', a:'Develop the product. Distribute it to people with a real need. Deliver it reliably.'},
+  {q:'Why does ownership matter in this model?', a:'You own the product and its value, rather than only using AI as a tool for an employer or someone else.'},
+  {q:'Which three questions help you test whether a trend is meaningful?', a:'Does it change how work is done? Will buyers pay for practical value? Would it matter without hype?'},
+  {q:'What should you validate before making a polished digital product?', a:'A specific buyer, a painful problem, evidence of demand and a solution you can actually deliver.'},
+  {q:'What does distribution mean?', a:'Reaching people who already experience the problem, being useful and offering a relevant solution clearly.'},
+  {q:'What must still work even if delivery is automated?', a:'Product accuracy and quality, access, clear terms, customer support and refund handling.'},
+  {q:'Name the five elements of Walter Bond’s progress code.', a:'Target, Recalibrate, Playbook, Right people and Execution.'}
+];
+const $ = selector => document.querySelector(selector);
+let chapterIndex = 0;
+let recallIndex = 0;
+let revealed = false;
+let toastTimer;
+
+function toast(message){
+  const el = $('#toast'); el.textContent = message; el.classList.add('show');
+  clearTimeout(toastTimer); toastTimer = setTimeout(() => el.classList.remove('show'), 2400);
+}
+function navRender(){
+  $('#chapterNav').innerHTML = chapters.map((c,i) => `<button type="button" class="nav-item" data-chapter="${i}" ${i===chapterIndex?'aria-current="page"':''}><span class="nav-number">${String(i+1).padStart(2,'0')}</span><span class="nav-text">${c.nav}</span>${saved.visited.includes(i)?'<span class="nav-check" aria-label="Explored">✓</span>':''}</button>`).join('');
+  const done = (new Set(saved.visited)).size;
+  $('#sidebarProgress').textContent = `${done} of ${chapters.length} explored`;
+  $('#sidebarProgressBar').style.width = `${done/chapters.length*100}%`;
+}
+function renderChapter(index, {scroll=true}={}){
+  chapterIndex=Math.max(0,Math.min(chapters.length-1,index));
+  saved.lastChapter=chapterIndex;save();
+  const c=chapters[chapterIndex];
+  if(!saved.visited.includes(chapterIndex)){saved.visited.push(chapterIndex);save()}
+  $('#chapterKicker').textContent=c.label;
+  $('#chapterIndex').textContent=String(chapterIndex+1).padStart(2,'0');
+  $('#chapterTotal').textContent=String(chapters.length).padStart(2,'0');
+  $('#topCurrent').textContent=c.nav;
+  const view=$('#view');
+  view.classList.remove('enter');
+  void view.offsetWidth;
+  view.innerHTML=`<header class="lesson-heading"><h1 class="lesson-title">${c.title}</h1><p class="lesson-lead">${c.lead}</p></header><div class="content-stack">${c.body()}</div>${notesToggle()}`;
+  view.classList.add('enter');
+  $('#personalPanel').hidden=true;
+  $('#personalNotes').value=saved.notes[chapterIndex]||'';
+  $('#previousButton').disabled=chapterIndex===0;
+  $('#nextButton').innerHTML=chapterIndex===chapters.length-1?`<span>Back to start</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>`:`<span>Next lesson</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>`;
+  const pct=((chapterIndex+1)/chapters.length)*100;
+  $('#footerProgress').style.width=`${pct}%`;
+  $('#footerProgressText').textContent=`${String(chapterIndex+1).padStart(2,'0')} / ${String(chapters.length).padStart(2,'0')}`;
+  if(chapterIndex===2)calculate();
+  if(chapterIndex===8){
+    for(const area of view.querySelectorAll('[data-work]')) area.value=saved.worksheet[area.dataset.work]||'';
+    for(const input of view.querySelectorAll('[data-task]')) input.checked=!!saved.tasks[input.dataset.task];
+  }
+  if(chapterIndex===9) renderRecall();
+  navRender();
+  closeMobileNav();
+  if(scroll) window.scrollTo({top:0,behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});
+}
+function calculate(){
+  const salary=Math.max(0,Number($('#salaryInput')?.value)||0);
+  const price=Math.max(0,Number($('#priceInput')?.value)||0);
+  const fees=Math.max(0,Math.min(99,Number($('#feeInput')?.value)||0));
+  const net=price*(1-fees/100);
+  const sales=net>0?Math.ceil(salary/net):null;
+  $('#salesResult').textContent=(sales===null?'—':new Intl.NumberFormat('en-GB').format(sales));
+}
+function renderRecall(){
+  const mount=$('#recallMount');if(!mount)return;
+  const question=questionBank[recallIndex];
+  const count=Object.values(saved.recall).filter(x=>x==='known').length;
+  mount.innerHTML=`
+    <div class="recall-track" aria-label="Card ${recallIndex+1} of ${questionBank.length}">${questionBank.map((q,i)=>`<span class="recall-dot ${saved.recall[i]?'complete':''} ${i===recallIndex?'current':''}"></span>`).join('')}</div>
+    <div class="flashcard"><div class="flashcard-label">QUESTION ${String(recallIndex+1).padStart(2,'0')} <span style="color:var(--muted);margin:0 8px">/</span> ${String(questionBank.length).padStart(2,'0')}</div>
+      <div class="flashcard-prompt">${question.q}</div>
+      ${revealed?`<div class="flashcard-answer">${question.a}</div>`:`<div class="tiny-note" style="margin:0">Try answering out loud before revealing.</div>`}
+    </div>
+    <div class="flashcard-controls"><div class="control-left"><button class="subtle-button" data-recall="prev" ${recallIndex===0?'disabled':''}>Previous card</button><button class="subtle-button" data-recall="next" ${recallIndex===questionBank.length-1?'disabled':''}>Next card</button></div>
+      <div class="control-right">${revealed?`<button class="subtle-button" data-recall="review">Review again</button><button class="solid-button" data-recall="know">I knew this ✓</button>`:`<button class="solid-button" data-recall="reveal">Reveal answer</button>`}</div></div>
+    <div class="score-card"><strong>${count}<span style="font-size:13px;color:var(--muted)"> / ${questionBank.length}</span></strong><span>Cards you feel confident recalling. Review the others tomorrow.</span></div>`;
+}
+function recallAction(action){
+  if(action==='prev'){recallIndex=Math.max(0,recallIndex-1);revealed=false;}
+  if(action==='next'){recallIndex=Math.min(questionBank.length-1,recallIndex+1);revealed=false;}
+  if(action==='reveal') revealed=true;
+  if(action==='review'||action==='know'){
+    saved.recall[recallIndex]=action==='know'?'known':'review';save();
+    if(recallIndex<questionBank.length-1){recallIndex++;revealed=false}
+    else toast('Review complete. You can revisit any card.');
+  }
+  renderRecall();
+}
+function toggleNotes(){
+  const panel=$('#personalPanel'); panel.hidden=!panel.hidden;
+  $('#notesToggle').setAttribute('aria-expanded',String(!panel.hidden));
+  $('#notesToggle span').textContent=panel.hidden?'Add my own notes':'Hide my notes';
+  if(!panel.hidden){panel.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'nearest'});$('#personalNotes').focus({preventScroll:true})}
+}
+function closeMobileNav(){document.body.classList.remove('menu-open');$('#mobileMenu').setAttribute('aria-expanded','false');$('#mobileOverlay').hidden=true;}
+function updateTheme(){document.body.dataset.theme=saved.theme;$('#themeButton').setAttribute('aria-label',saved.theme==='light'?'Switch to dark theme':'Switch to light theme')}
+function updateFocus(){document.body.classList.toggle('focus-mode',!!saved.focus);$('#focusButton').setAttribute('aria-pressed',String(!!saved.focus));$('#focusButton span').textContent=saved.focus?'Exit focus':'Focus'}
+function exportNotes(){
+  const lines=[
+    '# AI Income Challenge | Day One', '', 'Personal study notes', '',
+    '## Main ideas',
+    ...chapters.map((c,i)=>`${i+1}. ${c.nav}: ${c.takeaway}`), '',
+    '## My reflections',
+    `Why: ${saved.worksheet.why||'(not yet written)'}`,'',
+    `Today and in three years: ${saved.worksheet.future||'(not yet written)'}`,'',
+    `Action this week: ${saved.worksheet.action||'(not yet written)'}`,'',
+    '## Chapter notes',
+    ...chapters.flatMap((c,i)=> saved.notes[i]?.trim() ? [`### ${c.nav}`,saved.notes[i].trim(),''] : []),
+    '## First week checklist',
+    ...['Choose one buyer group','Identify one frustrating problem','Find evidence people want a solution','Review three existing alternatives','Make a small, useful prototype','Ask for honest feedback'].map((text,i)=>`${i+1}. ${saved.tasks[i]?'[Complete]':'[To do]'} ${text}`),
+    '',`Recall confident: ${Object.values(saved.recall).filter(x=>x==='known').length} of ${questionBank.length}`,
+    '', 'Built with Study Studio. All notes are stored in your browser and exported only when requested.'
+  ];
+  const blob=new Blob([lines.join('\n')],{type:'text/markdown;charset=utf-8'});
+  const href=URL.createObjectURL(blob);const anchor=document.createElement('a');anchor.href=href;anchor.download='AI_Income_Day_1_My_Notes.md';document.body.appendChild(anchor);anchor.click();anchor.remove();setTimeout(()=>URL.revokeObjectURL(href),2000);toast('Your Markdown notes are ready.');
+}
+
+$('#chapterNav').addEventListener('click',e=>{const button=e.target.closest('[data-chapter]');if(button)renderChapter(Number(button.dataset.chapter));});
+$('#previousButton').addEventListener('click',()=>renderChapter(chapterIndex-1));
+$('#nextButton').addEventListener('click',()=>renderChapter(chapterIndex===chapters.length-1?0:chapterIndex+1));
+$('#view').addEventListener('click',e=>{if(e.target.closest('#notesToggle'))toggleNotes();const button=e.target.closest('[data-recall]');if(button)recallAction(button.dataset.recall);});
+$('#view').addEventListener('input',e=>{
+  if(e.target.closest('.calculator'))calculate();
+  if(e.target.matches('[data-work]')){saved.worksheet[e.target.dataset.work]=e.target.value;save();}
+});
+$('#view').addEventListener('change',e=>{if(e.target.matches('[data-task]')){saved.tasks[e.target.dataset.task]=e.target.checked;save();}});
+$('#personalNotes').addEventListener('input',e=>{saved.notes[chapterIndex]=e.target.value;save();$('#saveStatus').textContent='Saved on this device';});
+$('#themeButton').addEventListener('click',()=>{saved.theme=saved.theme==='light'?'dark':'light';save();updateTheme()});
+$('#focusButton').addEventListener('click',()=>{saved.focus=!saved.focus;save();updateFocus();closeMobileNav()});
+$('#exportButton').addEventListener('click',exportNotes);
+$('#mobileMenu').addEventListener('click',()=>{const open=!document.body.classList.contains('menu-open');document.body.classList.toggle('menu-open',open);$('#mobileMenu').setAttribute('aria-expanded',String(open));$('#mobileOverlay').hidden=!open;});
+$('#mobileOverlay').addEventListener('click',closeMobileNav);
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'){closeMobileNav();return}
+  if(e.altKey||e.ctrlKey||e.metaKey||e.target.closest('input,textarea,select,[contenteditable="true"],summary'))return;
+  if(e.key==='ArrowRight'&&chapterIndex<chapters.length-1){e.preventDefault();renderChapter(chapterIndex+1)}
+  if(e.key==='ArrowLeft'&&chapterIndex>0){e.preventDefault();renderChapter(chapterIndex-1)}
+});
+
+// Gentle environment only parallax. The reading content never moves with the pointer.
+if(!matchMedia('(prefers-reduced-motion: reduce)').matches){
+  let latestX=0,latestY=0,latestScroll=0,queued=false;
+  const update=()=>{queued=false;const x=latestX;const y=latestY;const scroll=latestScroll;
+    document.documentElement.style.setProperty('--orb1x',`${(-x*15).toFixed(1)}px`);
+    document.documentElement.style.setProperty('--orb1y',`${(-y*12+scroll*0.018).toFixed(1)}px`);
+    document.documentElement.style.setProperty('--orb2x',`${(x*10).toFixed(1)}px`);
+    document.documentElement.style.setProperty('--orb2y',`${(y*10-scroll*.022).toFixed(1)}px`);
+    document.documentElement.style.setProperty('--orb3x',`${(x*9).toFixed(1)}px`);
+    document.documentElement.style.setProperty('--orb3y',`${(-y*12+scroll*.015).toFixed(1)}px`);
+  };
+  const queue=()=>{if(!queued){queued=true;requestAnimationFrame(update)}};
+  window.addEventListener('pointermove',e=>{if(e.pointerType==='touch')return;latestX=(e.clientX/window.innerWidth-.5)*2;latestY=(e.clientY/window.innerHeight-.5)*2;queue()},{passive:true});
+  window.addEventListener('scroll',()=>{latestScroll=Math.min(window.scrollY,900);queue()},{passive:true});
+}
+updateTheme();updateFocus();renderChapter(Number.isInteger(saved.lastChapter) ? saved.lastChapter : 0,{scroll:false});
+
+</script>
+</body>
+</html>
