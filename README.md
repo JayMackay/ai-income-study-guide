@@ -1,36 +1,70 @@
-# Day One | AI Income Study Studio
+# AI Income Study Studio
 
-A focused, interactive Day 1 study companion for the AI Income Challenge.
+A calm, interactive study companion for the AI Income Challenge. Built with **Next.js**, React and hand crafted CSS, inspired by Apple style Liquid Glass surfaces.
 
 ## Experience
 
-A minimalist Liquid Glass inspired interface, subtle parallax, clear chapter navigation, animated diagrams, study notes, interactive recall cards, an illustrative revenue calculator and a private planning worksheet. It prioritises concepts and actions over promotional success stories.
+- Five day learning library with a floating glass navigation menu. Day 1 has seven focused chapters. Days 2 through 5 are reserved for actual session notes and have no fabricated content.
+- Bento style landing area with learning progress and a shortcut to the Develop, Distribute, Deliver framework.
+- Purposeful parallax, hover lighting, view transitions and an animated reading progress indicator.
+- Interactive diagrams, recall flashcards, practical prompts and a simple revenue illustration.
+- Focus mode, light and dark themes, keyboard friendly navigation and reduced motion support.
+- Personal notes and weekly checklists stored locally in the browser. Use **Export my notes** to save a text backup. They are not synced to GitHub or across devices.
 
-## Open the guide
+## Local development
 
-Open `index.html` in a browser. It is completely self contained, with HTML, CSS and JavaScript bundled into a single file. There are no dependencies, installation steps, framework builds or API keys.
+Requires Node.js 22 or newer.
 
-## Optional GitHub Pages hosting
+```sh
+npm install
+npm run dev
+```
 
-1. Go to **Settings > Pages** in this repository.
-2. Under **Build and deployment**, choose **Deploy from a branch**.
-3. Select **main** and **/ (root)**, then save.
-4. GitHub Pages publishes at `https://jaymackay.github.io/ai-income-study-guide/` once deployment completes.
+Visit http://localhost:3000.
 
-**Important:** GitHub Pages publishes the site publicly, even if this source repository is private (subject to GitHub plan and eligibility). Do not enable Pages if you want to keep the guide private.
+Next.js uses **static export**, so no backend is required. To build for hosting:
 
-## Privacy and progress
+```sh
+npm run build
+```
 
-Your personal notes, quiz progress and planning responses are saved in your browser's local storage, not automatically to GitHub. They do not sync across devices. Use the Export button to save a local copy.
+The site appears in `out/`.
 
-## Accessibility
+## Deployment
 
-Semantic HTML, keyboard support, visible focus states, responsive layouts and a reduced motion mode. Outside text fields, use the arrow keys to change chapters.
+The workflow in `.github/workflows/deploy-next.yml` builds and publishes the Next.js export to GitHub Pages. To use it, open **Settings → Pages → Build and deployment → Source** and choose **GitHub Actions** (not "Deploy from a branch").
 
-## Disclaimer
+After a successful workflow, browse to:
 
-Speaker earnings claims are not evidence of typical outcomes. The illustrative calculator is not an earnings forecast and may exclude costs or taxes.
+https://jaymackay.github.io/ai-income-study-guide/
 
-## Editing
+The `basePath` in `next.config.mjs` is configured for this repository name.
 
-You can update the study content and visual styles directly in `index.html`. Future days can be added as additional chapters or separate pages.
+## Adding other days
+
+Study content lives in `lib/content.js`. The day selection interface, learning components and diagrams are defined in `app/page.jsx`. Styling is in `app/globals.css`.
+
+Day 2 to Day 5 are intentionally empty until you provide those seminar notes.
+
+## Privacy and limitations
+
+This study tool is hosted publicly on GitHub Pages. Personal notes are stored in browser localStorage and are not automatically transmitted to the repository, but local storage is not suitable for sensitive information and may be cleared by the browser.
+
+The revenue calculator is illustrative and not a forecast. Speaker claims should be evaluated independently.
+
+## Project structure
+
+```text
+app/
+  layout.jsx          App metadata and layout
+  page.jsx            Interactive client application
+  globals.css         Responsive design system
+lib/
+  content.js          Day and lesson content
+public/
+  favicon.svg         Brand icon
+.github/workflows/
+  deploy-next.yml     Static export and Pages deployment
+next.config.mjs       Static export configuration
+package.json          Dependencies and scripts
+```
