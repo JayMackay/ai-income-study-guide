@@ -179,12 +179,28 @@ export default function Home() {
       <main className="main">
         <div className="main-inner">
           <div className="breadcrumb"><span>THE STUDY COLLECTION</span><Glyph name="chevron" size={13}/><strong>DAY {String(day).padStart(2,'0')}</strong></div>
-          <section className="hero glass">
+          <div className="dashboard-bento"><section className="hero glass">
             <div className="hero-wash" aria-hidden="true"/><div className="hero-type"><span className="hero-eyebrow"><span/> {day===1?'DAY ONE / THE FOUNDATION':'YOUR LEARNING LIBRARY'}</span>
             <h2>Less noise.<br/><em>More signal.</em></h2><p>Complex ideas, distilled into meaningful steps. Study at your own pace.</p>
             <div className="hero-footer"><span className="hero-chip"><Glyph name="book" size={15}/> {day===1?'7 focused lessons':'5 days in your library'}</span><span className="hero-chip"><Glyph name="spark" size={15}/> Made for clarity</span></div></div>
             <div className="hero-art" aria-hidden="true"><div className="hero-ring h1"/><div className="hero-ring h2"/><div className="hero-ring h3"/><span className="hero-art-center">S<span>.</span></span></div>
           </section>
+            <aside className="bento-stack" aria-label="Study dashboard">
+              <button className="bento-mini glass" onClick={()=>navigate(1,'roadmap')}>
+                <span className="overline">YOUR FIRST WEEK</span>
+                <div className="bento-mini-number">{progress}<small>%</small></div>
+                <span className="bento-mini-label">Actions completed</span>
+                <span className="bento-progress-track"><span style={{width:progress+'%'}}/></span>
+                <span className="bento-mini-link">View your plan <Glyph name="arrow" size={15}/></span>
+              </button>
+              <button className="bento-mini bento-path glass" onClick={()=>navigate(1,'system')}>
+                <span className="overline">THE ESSENTIAL FRAMEWORK</span>
+                <div className="bento-path-dots"><span>01</span><i/><span>02</span><i/><span>03</span></div>
+                <strong>Develop. Distribute.<br/>Deliver.</strong>
+                <span className="bento-mini-link">Explore the 3D system <Glyph name="arrow" size={15}/></span>
+              </button>
+            </aside>
+          </div>
 
           {day===1?<div className="day-one">
             <div className="section-intro"><div><div className="overline">DAY 01 / THE FOUNDATION</div><h2>Explore the essentials<span>.</span></h2><p>One concept at a time. Pick up wherever you left off.</p></div><div className="lesson-total"><span>{String(chapterIndex+1).padStart(2,'0')}</span> / {String(chapters.length).padStart(2,'0')}</div></div>
