@@ -4,7 +4,7 @@ A calm, interactive study companion for the AI Income Challenge. Built with **Ne
 
 ## Experience
 
-- Five day learning library with a floating glass navigation menu. Day 1 has seven focused chapters. Days 2 through 5 are reserved for actual session notes and have no fabricated content.
+- Five day learning library with a floating glass navigation menu. Days 1 and 2 each have seven focused chapters. Day 2 is based on the supplied VIP transcript and product promise slide. Days 3 through 5 are reserved for future session notes.
 - Bento style landing area with learning progress and a shortcut to the Develop, Distribute, Deliver framework.
 - Purposeful parallax, hover lighting, view transitions and an animated reading progress indicator.
 - Interactive diagrams, recall flashcards, practical prompts and a simple revenue illustration.
@@ -44,7 +44,7 @@ The `basePath` in `next.config.mjs` is configured for this repository name.
 
 Study content lives in `lib/content.js`. The day selection interface, learning components and diagrams are defined in `app/page.jsx`. Styling is in `app/globals.css`.
 
-Day 2 to Day 5 are intentionally empty until you provide those seminar notes.
+Day 2 includes five digital unlocks, the product-promise worksheet and active recall from the VIP session. Days 3 to 5 remain placeholders.
 
 ## Privacy and limitations
 
