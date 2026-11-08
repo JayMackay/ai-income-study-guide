@@ -159,6 +159,7 @@ export default function Home() {
 
   return <div className="site">
     <div className="ambient ambient-a" aria-hidden="true"/><div className="ambient ambient-b" aria-hidden="true"/><div className="ambient ambient-c" aria-hidden="true"/>
+    <a className="skip-link" href="#main-content">Skip to study content</a>
     <header className="topbar glass">
       <button className="mobile-menu icon-btn" onClick={()=>setDrawer(!drawer)} aria-label={drawer?'Close day menu':'Open day menu'}><Glyph name={drawer?'close':'menu'}/></button>
       <button className="brand" onClick={()=>navigate(1)} aria-label="Study Studio home"><span className="brand-icon"><Glyph name="spark" size={19}/></span><span>STUDY<span className="brand-light">STUDIO</span></span></button>
@@ -166,7 +167,7 @@ export default function Home() {
       <div className="toolbar">
         <button className={'icon-btn '+(focus?'active-tool':'')} onClick={()=>setFocus(!focus)} aria-label={focus?'Exit focus mode':'Enable focus mode'} title="Focus mode"><Glyph name="focus"/></button>
         <button className="icon-btn" onClick={()=>setDark(!dark)} aria-label={dark?'Use light theme':'Use dark theme'} title="Change theme"><Glyph name={dark?'sun':'moon'}/></button>
-        <span className="top-avatar">01<span>/05</span></span>
+        <span className="top-avatar">{String(day).padStart(2,'0')}<span>/05</span></span>
       </div>
       <div className="reading-rail" role="progressbar" aria-label="Page reading progress" aria-valuemin={0} aria-valuemax={100} aria-valuenow={readProgress}><span style={{width:readProgress+'%'}}/></div>
     </header>
@@ -187,7 +188,7 @@ export default function Home() {
       </aside>
       {drawer&&<button className="drawer-scrim" onClick={()=>setDrawer(false)} aria-label="Close day menu"/>}
 
-      <main className="main">
+      <main className="main" id="main-content">
         <div className="main-inner">
           <div className="breadcrumb"><span>THE STUDY COLLECTION</span><Glyph name="chevron" size={13}/><strong>DAY {String(day).padStart(2,'0')}</strong></div>
           <div className="dashboard-bento"><section className="hero glass">
@@ -215,7 +216,13 @@ export default function Home() {
 
           {day===1?<div className="day-one">
             <div className="section-intro"><div><div className="overline">DAY 01 / THE FOUNDATION</div><h2>Explore the essentials<span>.</span></h2><p>One concept at a time. Pick up wherever you left off.</p></div><div className="lesson-total"><span>{String(chapterIndex+1).padStart(2,'0')}</span> / {String(chapters.length).padStart(2,'0')}</div></div>
-            <div className="chapter-tabs" role="tablist" aria-label="Day 1 chapters">{chapters.map(c=><button role="tab" aria-selected={c.id===chapterId} className={'chapter-tab '+(c.id===chapterId?'chosen':'')} key={c.id} onClick={()=>navigate(1,c.id)}><span>{c.number}</span>{c.category.toLowerCase()}</button>)}</div>
+            <div className="chapter-tabs" role="tablist" aria-label="Day 1 chapters" onKeyDown={e=>{
+              if(e.key!=='ArrowLeft'&&e.key!=='ArrowRight')return;
+              e.preventDefault();
+              const i=(chapterIndex+(e.key==='ArrowRight'?1:-1)+chapters.length)%chapters.length;
+              navigate(1,chapters[i].id);
+              requestAnimationFrame(()=>document.querySelectorAll('.chapter-tabs [role="tab"]')[i]?.focus());
+            }}>{chapters.map(c=><button role="tab" aria-selected={c.id===chapterId} className={'chapter-tab '+(c.id===chapterId?'chosen':'')} key={c.id} onClick={()=>navigate(1,c.id)}><span>{c.number}</span>{c.category.toLowerCase()}</button>)}</div>
             <article className="lesson-card glass enter" key={chapter.id} id="chapter-stage">
               <div className="lesson-top"><div className="eyebrow"><span className="eyebrow-dot"/> {chapter.category} <span className="eyebrow-separator">/</span> CHAPTER {chapter.number}</div><span className="lesson-duration"><Glyph name="clock" size={14}/> {chapter.duration} read</span></div>
               <h1>{chapter.title}</h1><p className="lesson-subtitle">{chapter.subtitle}</p>
