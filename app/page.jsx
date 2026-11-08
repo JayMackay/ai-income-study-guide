@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { flushSync } from 'react-dom';
-import { days, chapters, recall, weekSteps } from '../lib/content';
+import { days, chapters, recall, weekSteps, dayTwoChapters, dayTwoRecall } from '../lib/content';
 
 const storageKey = 'study-studio-v2';
 
@@ -63,6 +63,33 @@ function MiniArt({ kind }) {
   return <div className="diagram roadmap-visual"><div className="roadmap-orbit outer"/><div className="roadmap-orbit inner"/><div className="roadmap-core"><Glyph name="bolt" size={28}/><strong>Start small.</strong><span>Learn quickly.</span></div></div>;
 }
 
+function DayTwo({ notes, setNotes }) {
+  const [selected,setSelected]=useState(0);
+  const [flip,setFlip]=useState(false);
+  const [question,setQuestion]=useState(0);
+  const [promise,setPromise]=useState({who:'',problem:'',result:'',time:''});
+  const current=dayTwoChapters[selected];
+  useEffect(()=>{
+    try {const saved=JSON.parse(localStorage.getItem('study-studio-day2')||'{}');if(saved.promise)setPromise(saved.promise);}catch{}
+  },[]);
+  useEffect(()=>{localStorage.setItem('study-studio-day2',JSON.stringify({promise}));},[promise]);
+  return <section className="day-one day2-view">
+    <div className="section-intro"><div><div className="overline">DAY 02 / VIP SESSION / 8 NOVEMBER 2026</div><h2>Build something people need<span>.</span></h2><p>Seven focused chapters, the five digital unlocks and your product promise.</p></div><div className="lesson-total"><span>{String(selected+1).padStart(2,'0')}</span> / 07</div></div>
+    <div className="chapter-tabs" role="tablist" aria-label="Day 2 lessons">{dayTwoChapters.map((c,i)=><button key={c.id} role="tab" aria-selected={i===selected} className={'chapter-tab '+(i===selected?'chosen':'')} onClick={()=>{setSelected(i);setFlip(false)}}><span>{c.number}</span>{c.id}</button>)}</div>
+    <article className="lesson-card glass enter" key={current.id}>
+      <div className="lesson-top"><div className="eyebrow"><span className="eyebrow-dot"/>{current.category}</div><span className="lesson-duration"><Glyph name="clock" size={14}/> {current.duration} read</span></div>
+      <h1>{current.title}</h1><p className="lesson-subtitle">{current.subtitle}</p>
+      <div className="insight"><div className="insight-symbol"><Glyph name="spark" size={20}/></div><div><span className="overline">THE ONE THING TO REMEMBER</span><p>{current.insight}</p></div></div>
+      <div className="visual-label"><span>VISUAL EXPLANATION</span><span className="visual-dash"/></div>
+      <MiniArt kind={current.visual}/>
+      <div className="concepts">{current.points.map((point,i)=><div className="concept" key={point.title}><span className="concept-num">{String(i+1).padStart(2,'0')}</span><div><h3>{point.title}</h3><p>{point.body}</p></div></div>)}</div>
+      {current.id==='promise'&&<div className="promise-workshop"><div className="overline">THE FOUR-PART PRODUCT PROMISE</div><h3>Build your own.</h3><p>Fill in each part. This stays in your browser, alongside your study notes.</p><div className="promise-inputs">{[{k:'who',t:'WHO',hint:'First-time 2D game creators'},{k:'problem',t:'THE PROBLEM THAT GETS WORSE',hint:'who keep losing time to complicated setup'},{k:'result',t:'POINT B',hint:'build and play their first game prototype'},{k:'time',t:'HOW LONG',hint:'a timeframe confirmed by testing'}].map(item=><label key={item.k}>{item.t}<input value={promise[item.k]} placeholder={item.hint} onChange={e=>setPromise(v=>({...v,[item.k]:e.target.value}))}/></label>)}</div><div className="promise-result"><span className="overline">YOUR PRODUCT PROMISE</span><p>I help <strong>{promise.who||'[who]'}</strong>, with <strong>{promise.problem||'[a problem that is getting worse]'}</strong>, get to <strong>{promise.result||'[point B]'}</strong> in <strong>{promise.time||'[how long]'}</strong>.</p><button onClick={()=>navigator.clipboard?.writeText('I help '+(promise.who||'[who]')+', with '+(promise.problem||'[a worsening problem]')+', get to '+(promise.result||'[point B]')+' in '+(promise.time||'[how long]')+'.')}>Copy promise <Glyph name="save" size={14}/></button></div><small>Only claim a result or timeline that you can support with evidence. The seminar example is not verified as a guarantee.</small></div>}
+      <div className="practice"><div className="practice-head"><span className="practice-icon"><Glyph name="edit" size={19}/></span><div><span className="overline">PUT IT INTO PRACTICE</span><h3>Make it yours.</h3></div></div><p>{current.action}</p><label htmlFor={'day2-'+current.id} className="notes-label">MY THOUGHTS</label><textarea id={'day2-'+current.id} rows={4} placeholder="Capture your thinking here." value={notes['day2-'+current.id]||''} onChange={e=>setNotes(n=>({...n,['day2-'+current.id]:e.target.value}))}/><small className="autosave"><Glyph name="check" size={13}/> Saved privately in this browser</small></div>
+      {current.id==='promise'&&<div className="final-tools"><div className="quiz-head"><div><span className="overline">ACTIVE RECALL</span><h3>Test your understanding.</h3></div><span>{question+1} / {dayTwoRecall.length}</span></div><button className={'flashcard '+(flip?'flipped':'')} onClick={()=>setFlip(!flip)}><span className="overline">{flip?'ANSWER':'QUESTION'} / TAP TO FLIP</span><strong>{flip?dayTwoRecall[question].a:dayTwoRecall[question].q}</strong><span className="flash-hint"><Glyph name="refresh" size={15}/> Reveal or hide answer</span></button><div className="flash-controls"><button aria-label="Previous question" onClick={()=>{setQuestion(i=>(i+dayTwoRecall.length-1)%dayTwoRecall.length);setFlip(false)}}><Glyph name="back"/></button><button onClick={()=>{setQuestion(i=>(i+1)%dayTwoRecall.length);setFlip(false)}}>Next question <Glyph name="arrow"/></button></div></div>}
+      <div className="lesson-footer"><span className="lesson-question"><Glyph name="info" size={15}/> THINK ABOUT IT: {current.question}</span><div className="lesson-arrows"><button aria-label="Previous chapter" disabled={selected===0} onClick={()=>setSelected(i=>i-1)}><Glyph name="back" size={17}/></button><button disabled={selected===dayTwoChapters.length-1} onClick={()=>setSelected(i=>i+1)}>Next chapter <Glyph name="arrow" size={17}/></button></div></div>
+    </article>
+  </section>;
+}
 function Placeholder({ day, goHome }) {
   return <section className="placeholder-view enter" key={'future-' + day.number}>
     <div className="eyebrow"><span className="eyebrow-dot"/> DAY {String(day.number).padStart(2, '0')} <span className="eyebrow-separator">/</span> NOTES SPACE</div>
@@ -152,7 +179,7 @@ export default function Home() {
   }
   function toggleStep(index) {setDone(prev=>prev.includes(index)?prev.filter(x=>x!==index):[...prev,index]);}
   function exportNotes() {
-    const plain=['AI INCOME STUDY STUDIO','DAY 1 PERSONAL NOTES','',...chapters.map(c=>c.title+'\n'+(notes[c.id]||'(no notes yet)')+'\n'),'', 'FIRST WEEK',...weekSteps.map((s,i)=>(done.includes(i)?'[x] ':'[ ] ')+s)].join('\n');
+    const plain=['AI INCOME STUDY STUDIO','DAY 1 PERSONAL NOTES','',...chapters.map(c=>c.title+'\n'+(notes[c.id]||'(no notes yet)')+'\n'),'DAY 2 VIP NOTES','',...dayTwoChapters.map(c=>c.title+'\n'+(notes['day2-'+c.id]||'(no notes yet)')+'\n'),'','FIRST WEEK',...weekSteps.map((s,i)=>(done.includes(i)?'[x] ':'[ ] ')+s)].join('\n');
     const blob=new Blob([plain],{type:'text/plain;charset=utf-8'});
     const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='study-studio-notes.txt';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
   }
@@ -181,7 +208,7 @@ export default function Home() {
         <div className="side-group-label">THE CURRICULUM <span>05 DAYS</span></div>
         <nav className="day-nav" aria-label="Study days">
           {days.map(d=><button key={d.number} className={'day-link '+(day===d.number?'selected':'')} onClick={()=>navigate(d.number)} aria-current={day===d.number?'page':undefined}>
-            <span className="day-number">{String(d.number).padStart(2,'0')}</span><span className="day-text"><strong>{d.label}</strong><small>{d.number===1?'7 essential chapters':d.subtitle}</small></span>{d.number===1?<span className="ready-mark"><Glyph name="check" size={13}/></span>:<Glyph name="chevron" size={16}/>}
+            <span className="day-number">{String(d.number).padStart(2,'0')}</span><span className="day-text"><strong>{d.label}</strong><small>{d.number===1?'7 essential chapters':d.number===2?'7 VIP lessons':d.subtitle}</small></span>{d.number<=2?<span className="ready-mark"><Glyph name="check" size={13}/></span>:<Glyph name="chevron" size={16}/>}
           </button>)}
         </nav>
         <div className="sidebar-bottom"><div className="side-progress-head"><span>YOUR FIRST WEEK</span><strong>{progress}%</strong></div><div className="progress-bar"><span style={{width:progress+'%'}}/></div><p>Progress is saved on this device.</p><button className="export-btn" onClick={exportNotes}><Glyph name="save" size={15}/> Export my notes</button></div>
@@ -192,9 +219,9 @@ export default function Home() {
         <div className="main-inner">
           <div className="breadcrumb"><span>THE STUDY COLLECTION</span><Glyph name="chevron" size={13}/><strong>DAY {String(day).padStart(2,'0')}</strong></div>
           <div className="dashboard-bento"><section className="hero glass">
-            <div className="hero-wash" aria-hidden="true"/><div className="hero-type"><span className="hero-eyebrow"><span/> {day===1?'DAY ONE / THE FOUNDATION':'YOUR LEARNING LIBRARY'}</span>
+            <div className="hero-wash" aria-hidden="true"/><div className="hero-type"><span className="hero-eyebrow"><span/> {day===1?'DAY ONE / THE FOUNDATION':day===2?'DAY TWO / PRODUCT STRATEGY':'YOUR LEARNING LIBRARY'}</span>
             <h2>Less noise.<br/><em>More signal.</em></h2><p>Complex ideas, distilled into meaningful steps. Study at your own pace.</p>
-            <div className="hero-footer"><span className="hero-chip"><Glyph name="book" size={15}/> {day===1?'7 focused lessons':'5 days in your library'}</span><span className="hero-chip"><Glyph name="spark" size={15}/> Made for clarity</span></div></div>
+            <div className="hero-footer"><span className="hero-chip"><Glyph name="book" size={15}/> {day<=2?'7 focused lessons':'5 days in your library'}</span><span className="hero-chip"><Glyph name="spark" size={15}/> Made for clarity</span></div></div>
             <div className="hero-art" aria-hidden="true"><div className="hero-ring h1"/><div className="hero-ring h2"/><div className="hero-ring h3"/><span className="hero-art-center">S<span>.</span></span></div>
           </section>
             <aside className="bento-stack" aria-label="Study dashboard">
@@ -214,7 +241,7 @@ export default function Home() {
             </aside>
           </div>
 
-          {day===1?<div className="day-one">
+          {day===2?<DayTwo notes={notes} setNotes={setNotes}/>:day===1?<div className="day-one">
             <div className="section-intro"><div><div className="overline">DAY 01 / THE FOUNDATION</div><h2>Explore the essentials<span>.</span></h2><p>One concept at a time. Pick up wherever you left off.</p></div><div className="lesson-total"><span>{String(chapterIndex+1).padStart(2,'0')}</span> / {String(chapters.length).padStart(2,'0')}</div></div>
             <div className="chapter-tabs" role="tablist" aria-label="Day 1 chapters" onKeyDown={e=>{
               if(e.key!=='ArrowLeft'&&e.key!=='ArrowRight')return;
