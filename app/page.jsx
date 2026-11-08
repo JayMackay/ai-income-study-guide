@@ -1,6 +1,7 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
+import { flushSync } from 'react-dom';
 import { days, chapters, recall, weekSteps } from '../lib/content';
 
 const storageKey = 'study-studio-v2';
@@ -91,6 +92,7 @@ export default function Home() {
   const [cardIndex, setCardIndex] = useState(0);
   const [flipped, setFlipped] = useState(false);
   const [hydrated, setHydrated] = useState(false);
+  const [readProgress, setReadProgress] = useState(0);
 
   const chapterIndex = Math.max(chapters.findIndex(c=>c.id===chapterId),0);
   const chapter = chapters[chapterIndex];
@@ -117,6 +119,11 @@ export default function Home() {
   useEffect(()=>{document.documentElement.dataset.focus=focus?'true':'false';},[focus]);
   useEffect(()=>{if(hydrated)localStorage.setItem(storageKey,JSON.stringify({notes,done,dark,focus}));},[notes,done,dark,focus,hydrated]);
   useEffect(()=>{
+    const measure=()=>{ const max=document.documentElement.scrollHeight-window.innerHeight;setReadProgress(max>0?Math.max(0,Math.min(100,Math.round(window.scrollY/max*100))):100); };
+    measure();window.addEventListener('scroll',measure,{passive:true});window.addEventListener('resize',measure);
+    return ()=>{window.removeEventListener('scroll',measure);window.removeEventListener('resize',measure);};
+  },[day,chapterId]);
+  useEffect(()=>{
     if(typeof window==='undefined'||window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;
     let raf=0,px=0,py=0;
     const move=e=>{px=(e.clientX/window.innerWidth-.5)*2;py=(e.clientY/window.innerHeight-.5)*2;if(raf)return;raf=requestAnimationFrame(()=>{document.documentElement.style.setProperty('--mx',(px*20).toFixed(1)+'px');document.documentElement.style.setProperty('--my',(py*17).toFixed(1)+'px');raf=0;});};
@@ -135,10 +142,13 @@ export default function Home() {
   },[day,chapterIndex]);
 
   function navigate(nextDay, nextChapter='opportunity') {
-    setDay(nextDay);setChapterId(nextChapter);setDrawer(false);setFlipped(false);
+    const mutate=()=>{setDay(nextDay);setChapterId(nextChapter);setDrawer(false);setFlipped(false);};
     const target='#day-'+nextDay+(nextDay===1?'/'+nextChapter:'');
+    const reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (document.startViewTransition && !reduced) document.startViewTransition(()=>flushSync(mutate));
+    else mutate();
     if(window.location.hash!==target)window.history.pushState(null,'',target);
-    window.scrollTo({top:0,behavior:'smooth'});
+    window.scrollTo({top:0,behavior:reduced?'instant':'smooth'});
   }
   function toggleStep(index) {setDone(prev=>prev.includes(index)?prev.filter(x=>x!==index):[...prev,index]);}
   function exportNotes() {
@@ -158,6 +168,7 @@ export default function Home() {
         <button className="icon-btn" onClick={()=>setDark(!dark)} aria-label={dark?'Use light theme':'Use dark theme'} title="Change theme"><Glyph name={dark?'sun':'moon'}/></button>
         <span className="top-avatar">01<span>/05</span></span>
       </div>
+      <div className="reading-rail" role="progressbar" aria-label="Page reading progress" aria-valuemin={0} aria-valuemax={100} aria-valuenow={readProgress}><span style={{width:readProgress+'%'}}/></div>
     </header>
 
     <div className="shell">
