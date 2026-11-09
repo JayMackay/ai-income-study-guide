@@ -4,7 +4,7 @@ A calm, interactive study companion for the AI Income Challenge. Built with **Ne
 
 ## Experience
 
-- Five day learning library with a floating glass navigation menu. Days 1 and 2 each have seven focused chapters. Day 2 combines the supplied VIP transcript, Granola summary, and free main-session transcript into two switchable sets of lessons. Days 3 through 5 are reserved for future session notes.
+- Five day learning library with a floating glass navigation menu. Days 1 and 2 each have seven focused chapters. Day 2 combines the supplied VIP transcript, Granola summary, and free main-session transcript into two switchable sets of lessons. Days 4 and 5 are reserved for future session notes.
 - Bento style landing area with learning progress and a shortcut to the Develop, Distribute, Deliver framework.
 - Purposeful parallax, hover lighting, view transitions and an animated reading progress indicator.
 - Interactive diagrams, recall flashcards, practical prompts and a simple revenue illustration.
@@ -72,4 +72,4 @@ package.json          Dependencies and scripts
 
 ## Day 3 VIP study session
 
-Day 3 VIP (9 November 2026) includes seven chapters on intrinsic versus borrowed value, the four digital product formats, faceless content, selling and fulfilling through **Whop**, Mashal's case study, positioning, and the VIP challenge. The interactive Day 3 worksheet saves the format, audience, Point A and Point B locally and exports them with personal lesson notes. Promotional results are clearly described as claims, not established typical earnings. The Day 3 main session is not included until a transcript is provided.
+Day 3 VIP (9 November 2026) includes seven chapters on intrinsic versus borrowed value, the four digital product formats, faceless content, selling and fulfilling through **Whop**, Mashal's case study, positioning, and the VIP challenge. The interactive Day 3 worksheet saves the format, audience, Point A and Point B locally and exports them with personal lesson notes. Promotional results are clearly described as claims, not established typical earnings. The Day 3 main session (9 November 2026) is available as a separate seven-lesson track on creator partnerships, the four creator filters, ListKit outreach, personalised Synthesize products, Whop fulfilment and a critical review of sales assumptions. Includes an interactive partnership revenue scenario that models actual audience reach separately from follower count.
