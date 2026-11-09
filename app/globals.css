@@ -67,3 +67,14 @@
 .day3-view .day2-track-tabs button:disabled{opacity:.55;cursor:not-allowed}
 .day3-result{white-space:pre-line}
 @media(max-width:640px){.day3-format-choices{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* Day 3 main session hypothesis calculator */
+.scenario-fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px 24px;margin:22px 0}
+.scenario-fields label{display:block;font-size:12px;font-weight:700;color:var(--muted)}
+.scenario-fields label strong{display:block;color:var(--ink);font-size:16px;margin:4px 0 8px}
+.scenario-fields input{display:block;width:100%;accent-color:var(--accent)}
+.scenario-results{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:22px 0}
+.scenario-results>div{padding:17px 12px;background:var(--glass-strong);border:1px solid var(--line);border-radius:13px;min-width:0}
+.scenario-results span{display:block;color:var(--muted);font-size:9px;font-weight:800;letter-spacing:1px}
+.scenario-results strong{display:block;color:var(--ink);font-size:19px;overflow-wrap:anywhere;margin-top:7px}
+@media(max-width:650px){.scenario-fields{grid-template-columns:1fr}.scenario-results{grid-template-columns:1fr}}
