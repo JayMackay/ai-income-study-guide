@@ -58,3 +58,12 @@
 .day2-track-tabs button span{display:block;font:600 10px Manrope,sans-serif;opacity:.8;margin-top:5px}
 .day2-track-tabs button.is-active{border-color:var(--accent);background:var(--accent-soft);color:var(--ink)}
 .day2-track-tabs button:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+
+/* Day 3 format chooser and preview */
+.day3-format-choices{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;margin:19px 0 10px}
+.day3-format-choices button{background:var(--glass-strong);color:var(--ink);border:1px solid var(--line);border-radius:11px;padding:13px 8px;font:800 11px Manrope,sans-serif;cursor:pointer}
+.day3-format-choices button.is-active{border-color:var(--accent);background:var(--accent-soft)}
+.day3-format-choices button:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+.day3-view .day2-track-tabs button:disabled{opacity:.55;cursor:not-allowed}
+.day3-result{white-space:pre-line}
+@media(max-width:640px){.day3-format-choices{grid-template-columns:repeat(2,minmax(0,1fr))}}
