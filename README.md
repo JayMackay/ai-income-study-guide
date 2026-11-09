@@ -68,3 +68,8 @@ public/
 next.config.mjs       Static export configuration
 package.json          Dependencies and scripts
 ```
+
+
+## Day 3 VIP study session
+
+Day 3 VIP (9 November 2026) includes seven chapters on intrinsic versus borrowed value, the four digital product formats, faceless content, selling and fulfilling through **Whop**, Mashal's case study, positioning, and the VIP challenge. The interactive Day 3 worksheet saves the format, audience, Point A and Point B locally and exports them with personal lesson notes. Promotional results are clearly described as claims, not established typical earnings. The Day 3 main session is not included until a transcript is provided.
