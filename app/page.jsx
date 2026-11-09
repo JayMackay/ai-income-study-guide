@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { flushSync } from 'react-dom';
-import { days, chapters, recall, weekSteps, dayTwoChapters, dayTwoRecall, dayTwoMainChapters, dayTwoMainRecall, dayThreeVipChapters, dayThreeVipRecall } from '../lib/content';
+import { days, chapters, recall, weekSteps, dayTwoChapters, dayTwoRecall, dayTwoMainChapters, dayTwoMainRecall, dayThreeVipChapters, dayThreeVipRecall, dayThreeMainChapters, dayThreeMainRecall } from '../lib/content';
 
 const storageKey = 'study-studio-v2';
 
@@ -92,6 +92,9 @@ function DayTwo({ notes, setNotes }) {
       <MiniArt kind={current.visual}/>
       <div className="concepts">{current.points.map((point,i)=><div className="concept" key={point.title}><span className="concept-num">{String(i+1).padStart(2,'0')}</span><div><h3>{point.title}</h3><p>{point.body}</p></div></div>)}</div>
       {track==='vip'&&current.id==='promise'&&<div className="promise-workshop"><div className="overline">THE FOUR-PART PRODUCT PROMISE</div><h3>Build your own.</h3><p>Fill in each part. This stays in your browser, alongside your study notes.</p><div className="promise-inputs">{[{k:'who',t:'WHO',hint:'First-time 2D game creators'},{k:'problem',t:'THE PROBLEM THAT GETS WORSE',hint:'who keep losing time to complicated setup'},{k:'result',t:'POINT B',hint:'build and play their first game prototype'},{k:'time',t:'HOW LONG',hint:'a timeframe confirmed by testing'}].map(item=><label key={item.k}>{item.t}<input value={promise[item.k]} placeholder={item.hint} onChange={e=>setPromise(v=>({...v,[item.k]:e.target.value}))}/></label>)}</div><div className="promise-result"><span className="overline">YOUR PRODUCT PROMISE</span><p>I help <strong>{promise.who||'[who]'}</strong>, with <strong>{promise.problem||'[a problem that is getting worse]'}</strong>, get to <strong>{promise.result||'[point B]'}</strong> in <strong>{promise.time||'[how long]'}</strong>.</p><button onClick={()=>navigator.clipboard?.writeText('I help '+(promise.who||'[who]')+', with '+(promise.problem||'[a worsening problem]')+', get to '+(promise.result||'[point B]')+' in '+(promise.time||'[how long]')+'.')}>Copy promise <Glyph name="save" size={14}/></button></div><small>Only claim a result or timeline that you can support with evidence. The seminar example is not verified as a guarantee.</small></div>}
+      {track==='main'&&current.id==='math'&&<div className="promise-workshop"><div className="overline">INTERACTIVE PARTNERSHIP SCENARIO</div><h3>Test the assumptions.</h3><p>Illustrative maths, not a sales forecast. “Reach” is the share of followers who see the offer and “conversion” is the share of those reached who purchase.</p><div className="scenario-fields">
+        {[{label:'Creator followers',value:followers,min:10000,max:100000,step:5000,change:setFollowers,suffix:''},{label:'Audience reached',value:reach,min:5,max:100,step:5,change:setReach,suffix:'%'},{label:'Purchase rate among reached',value:conversion,min:0,max:5,step:.25,change:setConversion,suffix:'%'},{label:'Product price',value:price,min:10,max:300,step:10,change:setPrice,suffix:' USD'},{label:'Your revenue share',value:share,min:10,max:90,step:5,change:setShare,suffix:'%'}].map(f=><label key={f.label}>{f.label}<strong>{f.value.toLocaleString('en-GB')}{f.suffix}</strong><input type="range" min={f.min} max={f.max} step={f.step} value={f.value} onChange={e=>f.change(Number(e.target.value))}/></label>)}
+      </div><div className="scenario-results"><div><span>BUYERS (EST.)</span><strong>{orders.toLocaleString('en-GB')}</strong></div><div><span>GROSS SALES</span><strong>{currency(gross)}</strong></div><div><span>YOUR GROSS SHARE</span><strong>{currency(netShare)}</strong></div></div><small>Before Whop fees, payment processing, tax, refunds, support and other costs. Assumes the creator promotes the offer. The livestream's 0.5%-of-all-followers example is different from the two-stage model here.</small></div>}
       <div className="practice"><div className="practice-head"><span className="practice-icon"><Glyph name="edit" size={19}/></span><div><span className="overline">PUT IT INTO PRACTICE</span><h3>Make it yours.</h3></div></div><p>{current.action}</p><label htmlFor={notesKey} className="notes-label">MY THOUGHTS</label><textarea id={notesKey} rows={4} placeholder="Capture your thinking here." value={notes[notesKey]||''} onChange={e=>setNotes(n=>({...n,[notesKey]:e.target.value}))}/><small className="autosave"><Glyph name="check" size={13}/> Saved privately in this browser</small></div>
       {((track==='vip'&&current.id==='promise')||(track==='main'&&current.id==='claims'))&&<div className="final-tools"><div className="quiz-head"><div><span className="overline">ACTIVE RECALL</span><h3>Test your understanding.</h3></div><span>{question+1} / {questions.length}</span></div><button className={'flashcard '+(flip?'flipped':'')} onClick={()=>setFlip(!flip)}><span className="overline">{flip?'ANSWER':'QUESTION'} / TAP TO FLIP</span><strong>{flip?questions[question].a:questions[question].q}</strong><span className="flash-hint"><Glyph name="refresh" size={15}/> Reveal or hide answer</span></button><div className="flash-controls"><button aria-label="Previous question" onClick={()=>{setQuestion(i=>(i+questions.length-1)%questions.length);setFlip(false)}}><Glyph name="back"/></button><button onClick={()=>{setQuestion(i=>(i+1)%questions.length);setFlip(false)}}>Next question <Glyph name="arrow"/></button></div></div>}
       <div className="lesson-footer"><span className="lesson-question"><Glyph name="info" size={15}/> THINK ABOUT IT: {current.question}</span><div className="lesson-arrows"><button aria-label="Previous chapter" disabled={selected===0} onClick={()=>setSelected(i=>i-1)}><Glyph name="back" size={17}/></button><button disabled={selected===lessons.length-1} onClick={()=>setSelected(i=>i+1)}>Next chapter <Glyph name="arrow" size={17}/></button></div></div>
@@ -100,21 +103,34 @@ function DayTwo({ notes, setNotes }) {
 }
 
 function DayThree({ notes, setNotes }) {
+  const [track,setTrack]=useState('vip');
   const [selected,setSelected]=useState(0);
   const [question,setQuestion]=useState(0);
   const [flipped,setFlipped]=useState(false);
-  const current=dayThreeVipChapters[selected];
-  const notesKey='day3-vip-'+current.id;
+  const lessons=track==='vip'?dayThreeVipChapters:dayThreeMainChapters;
+  const recallCards=track==='vip'?dayThreeVipRecall:dayThreeMainRecall;
+  const current=lessons[selected];
+  const notesKey='day3-'+track+'-'+current.id;
   const field=(key,value)=>setNotes(prev=>({...prev,[key]:value}));
   const format=notes['day3-format']||'Digital asset';
   const pointA=notes['day3-point-a']||'';
   const pointB=notes['day3-point-b']||'';
   const audience=notes['day3-audience']||'';
+  const [followers,setFollowers]=useState(75000);
+  const [reach,setReach]=useState(30);
+  const [conversion,setConversion]=useState(1);
+  const [price,setPrice]=useState(150);
+  const [share,setShare]=useState(50);
+  const visitors=Math.round(followers*reach/100);
+  const orders=Math.round(visitors*conversion/100);
+  const gross=orders*price;
+  const netShare=gross*share/100;
+  const currency=n=>new Intl.NumberFormat('en-GB',{style:'currency',currency:'USD',maximumFractionDigits:0}).format(n);
   const draft='Format: '+format+'\nWho: '+(audience||'[specific audience]')+'\nPoint A: '+(pointA||'[current problem]')+'\nPoint B: '+(pointB||'[desired outcome]');
   return <section className="day-one day3-view">
-    <div className="section-intro"><div><div className="overline">DAY 03 / VIP SESSION / 9 NOVEMBER 2026</div><h2>Package the value<span>.</span></h2><p>Seven focused lessons on intrinsic value, faceless formats, Whop and a practical Day 3 challenge.</p></div><div className="lesson-total"><span>{String(selected+1).padStart(2,'0')}</span> / {String(dayThreeVipChapters.length).padStart(2,'0')}</div></div>
-    <div className="day2-track-tabs" role="group" aria-label="Day 3 session"><button className="is-active" aria-pressed="true">VIP session <span>7 lessons</span></button><button disabled title="Main session not yet provided">Main session <span>Not added yet</span></button></div>
-    <div className="chapter-tabs" role="tablist" aria-label="Day 3 VIP lessons">{dayThreeVipChapters.map((c,i)=><button key={c.id} role="tab" aria-selected={i===selected} className={'chapter-tab '+(i===selected?'chosen':'')} onClick={()=>{setSelected(i);setFlipped(false)}}><span>{c.number}</span>{c.id}</button>)}</div>
+    <div className="section-intro"><div><div className="overline">DAY 03 / 9 NOVEMBER 2026</div><h2>Package the value<span>.</span></h2><p>Two sessions: package intrinsic value in VIP, then learn the creator partnership distribution method.</p></div><div className="lesson-total"><span>{String(selected+1).padStart(2,'0')}</span> / {String(lessons.length).padStart(2,'0')}</div></div>
+    <div className="day2-track-tabs" role="group" aria-label="Day 3 session"><button className={track==='vip'?'is-active':''} aria-pressed={track==='vip'} onClick={()=>{setTrack('vip');setSelected(0);setQuestion(0);setFlipped(false)}}>VIP session <span>7 lessons</span></button><button className={track==='main'?'is-active':''} aria-pressed={track==='main'} onClick={()=>{setTrack('main');setSelected(0);setQuestion(0);setFlipped(false)}}>Free main session <span>7 lessons</span></button></div>
+    <div className="chapter-tabs" role="tablist" aria-label={track==='vip'?'Day 3 VIP lessons':'Day 3 main lessons'}>{lessons.map((c,i)=><button key={c.id} role="tab" aria-selected={i===selected} className={'chapter-tab '+(i===selected?'chosen':'')} onClick={()=>{setSelected(i);setFlipped(false)}}><span>{c.number}</span>{c.id}</button>)}</div>
     <article className="lesson-card glass enter" key={current.id}>
       <div className="lesson-top"><div className="eyebrow"><span className="eyebrow-dot"/>{current.category}</div><span className="lesson-duration"><Glyph name="clock" size={14}/> {current.duration} read</span></div>
       <h1>{current.title}</h1><p className="lesson-subtitle">{current.subtitle}</p>
@@ -122,7 +138,7 @@ function DayThree({ notes, setNotes }) {
       <div className="visual-label"><span>VISUAL EXPLANATION</span><span className="visual-dash"/></div>
       <MiniArt kind={current.visual}/>
       <div className="concepts">{current.points.map((p,i)=><div className="concept" key={p.title}><span className="concept-num">{String(i+1).padStart(2,'0')}</span><div><h3>{p.title}</h3><p>{p.body}</p></div></div>)}</div>
-      {current.id==='challenge'&&<div className="promise-workshop"><div className="overline">THE DAY 3 VIP CHALLENGE</div><h3>Pick one format. Map the transformation.</h3><p>Choose the format that best delivers the outcome. Fill in the customer's point A and point B. Your answers save automatically to this browser and are included when you export notes.</p>
+      {track==='vip'&&current.id==='challenge'&&<div className="promise-workshop"><div className="overline">THE DAY 3 VIP CHALLENGE</div><h3>Pick one format. Map the transformation.</h3><p>Choose the format that best delivers the outcome. Fill in the customer's point A and point B. Your answers save automatically to this browser and are included when you export notes.</p>
         <div className="day3-format-choices">{['Ebook','Video programme','Digital asset','Digital mind'].map(v=><button key={v} aria-pressed={format===v} className={format===v?'is-active':''} onClick={()=>field('day3-format',v)}>{v}</button>)}</div>
         <div className="promise-inputs">
           <label>WHO<input value={audience} placeholder="Beginner game creators" onChange={e=>field('day3-audience',e.target.value)}/></label>
@@ -133,8 +149,8 @@ function DayThree({ notes, setNotes }) {
         <small>The product format and outcome are your hypotheses. Verify the promise before selling.</small>
       </div>}
       <div className="practice"><div className="practice-head"><span className="practice-icon"><Glyph name="edit" size={19}/></span><div><span className="overline">PUT IT INTO PRACTICE</span><h3>Make it yours.</h3></div></div><p>{current.action}</p><label htmlFor={notesKey} className="notes-label">MY THOUGHTS</label><textarea id={notesKey} rows={4} placeholder="Capture your thinking here." value={notes[notesKey]||''} onChange={e=>field(notesKey,e.target.value)}/><small className="autosave"><Glyph name="check" size={13}/> Saved privately in this browser</small></div>
-      {current.id==='challenge'&&<div className="final-tools"><div className="quiz-head"><div><span className="overline">ACTIVE RECALL</span><h3>Test your understanding.</h3></div><span>{question+1} / {dayThreeVipRecall.length}</span></div><button className={'flashcard '+(flipped?'flipped':'')} onClick={()=>setFlipped(!flipped)}><span className="overline">{flipped?'ANSWER':'QUESTION'} / TAP TO FLIP</span><strong>{flipped?dayThreeVipRecall[question].a:dayThreeVipRecall[question].q}</strong><span className="flash-hint"><Glyph name="refresh" size={15}/> Reveal or hide answer</span></button><div className="flash-controls"><button aria-label="Previous question" onClick={()=>{setQuestion(i=>(i+dayThreeVipRecall.length-1)%dayThreeVipRecall.length);setFlipped(false)}}><Glyph name="back"/></button><button onClick={()=>{setQuestion(i=>(i+1)%dayThreeVipRecall.length);setFlipped(false)}}>Next question <Glyph name="arrow"/></button></div></div>}
-      <div className="lesson-footer"><span className="lesson-question"><Glyph name="info" size={15}/> THINK ABOUT IT: {current.question}</span><div className="lesson-arrows"><button aria-label="Previous chapter" disabled={selected===0} onClick={()=>setSelected(i=>i-1)}><Glyph name="back" size={17}/></button><button disabled={selected===dayThreeVipChapters.length-1} onClick={()=>setSelected(i=>i+1)}>Next chapter <Glyph name="arrow" size={17}/></button></div></div>
+      {((track==='vip'&&current.id==='challenge')||(track==='main'&&current.id==='claims'))&&<div className="final-tools"><div className="quiz-head"><div><span className="overline">ACTIVE RECALL</span><h3>Test your understanding.</h3></div><span>{question+1} / {recallCards.length}</span></div><button className={'flashcard '+(flipped?'flipped':'')} onClick={()=>setFlipped(!flipped)}><span className="overline">{flipped?'ANSWER':'QUESTION'} / TAP TO FLIP</span><strong>{flipped?recallCards[question].a:dayThreeVipRecall[question].q}</strong><span className="flash-hint"><Glyph name="refresh" size={15}/> Reveal or hide answer</span></button><div className="flash-controls"><button aria-label="Previous question" onClick={()=>{setQuestion(i=>(i+dayThreeVipRecall.length-1)%dayThreeVipRecall.length);setFlipped(false)}}><Glyph name="back"/></button><button onClick={()=>{setQuestion(i=>(i+1)%dayThreeVipRecall.length);setFlipped(false)}}>Next question <Glyph name="arrow"/></button></div></div>}
+      <div className="lesson-footer"><span className="lesson-question"><Glyph name="info" size={15}/> THINK ABOUT IT: {current.question}</span><div className="lesson-arrows"><button aria-label="Previous chapter" disabled={selected===0} onClick={()=>setSelected(i=>i-1)}><Glyph name="back" size={17}/></button><button disabled={selected===lessons.length-1} onClick={()=>setSelected(i=>i+1)}>Next chapter <Glyph name="arrow" size={17}/></button></div></div>
     </article>
   </section>;
 }
@@ -228,7 +244,7 @@ export default function Home() {
   }
   function toggleStep(index) {setDone(prev=>prev.includes(index)?prev.filter(x=>x!==index):[...prev,index]);}
   function exportNotes() {
-    const plain=['AI INCOME STUDY STUDIO','DAY 1 PERSONAL NOTES','',...chapters.map(c=>c.title+'\n'+(notes[c.id]||'(no notes yet)')+'\n'),'DAY 2 VIP NOTES','',...dayTwoChapters.map(c=>c.title+'\n'+(notes['day2-'+c.id]||'(no notes yet)')+'\n'),'DAY 2 FREE MAIN SESSION','',...dayTwoMainChapters.map(c=>c.title+'\n'+(notes['day2-main-'+c.id]||'(no notes yet)')+'\n'),'DAY 3 VIP NOTES','',...dayThreeVipChapters.map(c=>c.title+'\n'+(notes['day3-vip-'+c.id]||'(no notes yet)')+'\n'),'DAY 3 VIP CHALLENGE','Format: '+(notes['day3-format']||'Digital asset'),'Who: '+(notes['day3-audience']||''),'Point A: '+(notes['day3-point-a']||''),'Point B: '+(notes['day3-point-b']||''),'','FIRST WEEK',...weekSteps.map((s,i)=>(done.includes(i)?'[x] ':'[ ] ')+s)].join('\n');
+    const plain=['AI INCOME STUDY STUDIO','DAY 1 PERSONAL NOTES','',...chapters.map(c=>c.title+'\n'+(notes[c.id]||'(no notes yet)')+'\n'),'DAY 2 VIP NOTES','',...dayTwoChapters.map(c=>c.title+'\n'+(notes['day2-'+c.id]||'(no notes yet)')+'\n'),'DAY 2 FREE MAIN SESSION','',...dayTwoMainChapters.map(c=>c.title+'\n'+(notes['day2-main-'+c.id]||'(no notes yet)')+'\n'),'DAY 3 VIP NOTES','',...dayThreeVipChapters.map(c=>c.title+'\n'+(notes['day3-vip-'+c.id]||'(no notes yet)')+'\n'),'DAY 3 MAIN SESSION','',...dayThreeMainChapters.map(c=>c.title+'\n'+(notes['day3-main-'+c.id]||'(no notes yet)')+'\n'),'DAY 3 VIP CHALLENGE','Format: '+(notes['day3-format']||'Digital asset'),'Who: '+(notes['day3-audience']||''),'Point A: '+(notes['day3-point-a']||''),'Point B: '+(notes['day3-point-b']||''),'','FIRST WEEK',...weekSteps.map((s,i)=>(done.includes(i)?'[x] ':'[ ] ')+s)].join('\n');
     const blob=new Blob([plain],{type:'text/plain;charset=utf-8'});
     const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='study-studio-notes.txt';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
   }
@@ -257,7 +273,7 @@ export default function Home() {
         <div className="side-group-label">THE CURRICULUM <span>05 DAYS</span></div>
         <nav className="day-nav" aria-label="Study days">
           {days.map(d=><button key={d.number} className={'day-link '+(day===d.number?'selected':'')} onClick={()=>navigate(d.number)} aria-current={day===d.number?'page':undefined}>
-            <span className="day-number">{String(d.number).padStart(2,'0')}</span><span className="day-text"><strong>{d.label}</strong><small>{d.number===1?'7 essential chapters':d.number===2?'VIP + main session':d.number===3?'VIP session available':d.subtitle}</small></span>{d.number<=3?<span className="ready-mark"><Glyph name="check" size={13}/></span>:<Glyph name="chevron" size={16}/>}
+            <span className="day-number">{String(d.number).padStart(2,'0')}</span><span className="day-text"><strong>{d.label}</strong><small>{d.number===1?'7 essential chapters':d.number===2?'VIP + main session':d.number===3?'VIP + main session':d.subtitle}</small></span>{d.number<=3?<span className="ready-mark"><Glyph name="check" size={13}/></span>:<Glyph name="chevron" size={16}/>}
           </button>)}
         </nav>
         <div className="sidebar-bottom"><div className="side-progress-head"><span>YOUR FIRST WEEK</span><strong>{progress}%</strong></div><div className="progress-bar"><span style={{width:progress+'%'}}/></div><p>Progress is saved on this device.</p><button className="export-btn" onClick={exportNotes}><Glyph name="save" size={15}/> Export my notes</button></div>
